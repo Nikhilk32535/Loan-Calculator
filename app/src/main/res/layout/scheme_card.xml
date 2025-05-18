@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/schemeCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="6dp"
+    android:background="@color/white"
+    android:backgroundTint="@color/gold_yellow">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Scheme Name -->
+        <TextView
+            android:id="@+id/tvSchemeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scheme: SL"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/text_red" />
+
+        <!-- Loan Amount -->
+        <TextView
+            android:id="@+id/tvLoanAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Loan Amount: ₹1,20,000"
+            android:textSize="16sp"
+            android:textColor="@color/text_grey" />
+
+        <!-- Monthly Interest -->
+        <TextView
+            android:id="@+id/tvMonthlyInterest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Monthly Interest: ₹950"
+            android:textSize="16sp"
+            android:textColor="@color/text_grey" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

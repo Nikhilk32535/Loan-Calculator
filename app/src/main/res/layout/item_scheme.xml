@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+  >
+
+    <TextView
+        android:id="@+id/tvSchemeName"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="tvSchemeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvLtvType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tvLtvType"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/tvLtvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tvLtvPrice"/>
+
+    <TextView
+        android:id="@+id/tvLimits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tvLimits"/>
+
+    <TextView
+        android:id="@+id/tvInterestYearly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tvInterestYearly"/>
+
+    <TextView
+        android:id="@+id/tvInterestMonthly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tvInterestMonthly"/>
+
+</LinearLayout>

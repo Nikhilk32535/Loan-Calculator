@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 1. Box: Update 75LTV Rate -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_foucused"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update 75LTV Rate"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_ltv_75rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter 75LTV Price"
+                android:inputType="numberDecimal" />
+
+            <Button
+                android:id="@+id/btn_update75ltv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update"
+                android:layout_gravity="center"
+                android:textColor="@color/text_red"
+                android:backgroundTint="@color/gold_yellow"
+                android:layout_marginTop="12dp" />
+        </LinearLayout>
+
+        <!-- 2. Box: Add Scheme -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/round_corner_foucused"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/et_scheme_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Scheme Name" />
+
+            <TextView
+                style="@style/SchemeTextStyle"
+                android:text="Select LTV Type"
+                android:layout_marginTop="12dp" />
+
+            <RadioGroup
+                android:id="@+id/ltvRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp">
+
+                <RadioButton
+                    android:id="@+id/ltv50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50LTV" />
+
+                <RadioButton
+                    android:id="@+id/ltv60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="60LTV" />
+
+                <RadioButton
+                    android:id="@+id/ltv65"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="65LTV" />
+
+                <RadioButton
+                    android:id="@+id/ltv75"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="75LTV" />
+            </RadioGroup>
+
+            <!-- Added note for users -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Note: Price is auto-calculated based on the selected LTV and updated 75LTV rate."
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_marginBottom="12dp"/>
+
+            <EditText
+                android:id="@+id/et_interest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Interest (% per year)"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/et_min_limit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Minimum Limit"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/et_max_limit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Maximum Limit"
+                android:inputType="numberDecimal" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Scheme"
+                android:textColor="@color/text_red"
+                android:backgroundTint="@color/gold_yellow"
+                android:layout_marginTop="16dp" />
+        </LinearLayout>
+
+        <!-- 3. Box: Scheme List -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/round_corner_foucused"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saved Schemes"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:paddingBottom="8dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSchemes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
