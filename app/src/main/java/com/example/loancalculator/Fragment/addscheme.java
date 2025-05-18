@@ -62,13 +62,28 @@ public class addscheme extends Fragment {
                 Toast.makeText(getContext(), "Enter 75LTV Price first", Toast.LENGTH_SHORT).show();
                 return;
             }
+
             try {
                 current75LtvPrice = Float.parseFloat(priceStr);
-                Toast.makeText(getContext(), "75LTV price updated", Toast.LENGTH_SHORT).show();
+
+                new Thread(() -> {
+                    // ✅ Update prices in DB
+                    appDatabase.schemeDao().updatePricesForAllSchemes(current75LtvPrice);
+
+                    // ✅ Reload updated schemes and refresh adapter
+                    List<Scheme> updatedList = appDatabase.schemeDao().getAllSchemes();
+
+                    requireActivity().runOnUiThread(() -> {
+                        schemeAdapter.setSchemeList(updatedList);
+                        Toast.makeText(getContext(), "Schemes updated with new 75LTV price", Toast.LENGTH_SHORT).show();
+                    });
+                }).start();
+
             } catch (NumberFormatException e) {
                 Toast.makeText(getContext(), "Invalid price", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         btnSave.setOnClickListener(v -> saveScheme());
 

@@ -32,11 +32,12 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.SchemeView
     public void onBindViewHolder(@NonNull SchemeViewHolder holder, int position) {
         Scheme scheme = schemeList.get(position);
 
-        holder.tvSchemeName.setText(scheme.getName());
+        holder.tvSchemeName.setText("Scheme "+scheme.getName());
         holder.tvLtvType.setText("LTV Type: " + scheme.getLtvType());
         holder.tvLtvPrice.setText("Price: ₹" + scheme.getPrice());
 
-        holder.tvLimits.setText("Limits: Min ₹" + scheme.getMinLimit() + " - Max ₹" + scheme.getMaxLimit());
+        holder.tvmin.setText("Minimum : "+scheme.getMinLimit());
+        holder.tvmax.setText("Maximum : "+scheme.getMaxLimit());
 
         holder.tvInterestYearly.setText("Yearly Interest: " + scheme.getInterest() + "%");
 
@@ -51,14 +52,15 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.SchemeView
     }
 
     static class SchemeViewHolder extends RecyclerView.ViewHolder {
-        TextView tvSchemeName, tvLtvType, tvLtvPrice, tvLimits, tvInterestYearly, tvInterestMonthly;
+        TextView tvSchemeName, tvLtvType, tvLtvPrice, tvmin , tvmax , tvInterestYearly, tvInterestMonthly;
 
         public SchemeViewHolder(@NonNull View itemView) {
             super(itemView);
             tvSchemeName = itemView.findViewById(R.id.tvSchemeName);
             tvLtvType = itemView.findViewById(R.id.tvLtvType);
             tvLtvPrice = itemView.findViewById(R.id.tvLtvPrice);
-            tvLimits = itemView.findViewById(R.id.tvLimits);
+            tvmin = itemView.findViewById(R.id.tvmin);
+            tvmax = itemView.findViewById(R.id.tvmax);
             tvInterestYearly = itemView.findViewById(R.id.tvInterestYearly);
             tvInterestMonthly = itemView.findViewById(R.id.tvInterestMonthly);
         }

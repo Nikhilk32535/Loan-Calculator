@@ -5,6 +5,7 @@
     android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
   >
 
     <TextView
@@ -12,9 +13,15 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:text="tvSchemeName"
+        android:textColor="@color/text_red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:useDefaultMargins="true">
     <TextView
         android:id="@+id/tvLtvType"
         android:layout_width="wrap_content"
@@ -29,7 +36,13 @@
         android:text="tvLtvPrice"/>
 
     <TextView
-        android:id="@+id/tvLimits"
+        android:id="@+id/tvmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tvLimits"/>
+
+    <TextView
+        android:id="@+id/tvmax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="tvLimits"/>
@@ -46,4 +59,5 @@
         android:layout_height="wrap_content"
         android:text="tvInterestMonthly"/>
 
+    </GridLayout>
 </LinearLayout>
