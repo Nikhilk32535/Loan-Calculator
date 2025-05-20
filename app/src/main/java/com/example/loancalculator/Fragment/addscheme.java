@@ -1,5 +1,9 @@
 package com.example.loancalculator.Fragment;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,18 +17,20 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.loancalculator.R;
 import com.example.loancalculator.Scheme;
+import com.example.loancalculator.SchemeDao;
 import com.example.loancalculator.SchemeDatabase;
 import com.example.loancalculator.adapter.SchemeAdapter;
 
 import java.util.List;
-import java.util.Locale;
+import java.util.concurrent.Executors;
 
 public class addscheme extends Fragment {
 
@@ -44,6 +50,7 @@ public class addscheme extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_addscheme, container, false);
 
+        // Initialize UI elements
         et75LtvPrice = rootView.findViewById(R.id.et_ltv_75rate);
         btnUpdate75Ltv = rootView.findViewById(R.id.btn_update75ltv);
         etSchemeName = rootView.findViewById(R.id.et_scheme_name);
@@ -57,6 +64,7 @@ public class addscheme extends Fragment {
         appDatabase = SchemeDatabase.getInstance(getContext());
 
         setupRecyclerView();
+        loadSchemes();
 
         btnUpdate75Ltv.setOnClickListener(v -> {
             String priceStr = et75LtvPrice.getText().toString().trim();
@@ -69,10 +77,7 @@ public class addscheme extends Fragment {
                 current75LtvPrice = Float.parseFloat(priceStr);
 
                 new Thread(() -> {
-                    // ✅ Update prices in DB
                     appDatabase.schemeDao().updatePricesForAllSchemes(current75LtvPrice);
-
-                    // ✅ Reload updated schemes and refresh adapter
                     List<Scheme> updatedList = appDatabase.schemeDao().getAllSchemes();
 
                     requireActivity().runOnUiThread(() -> {
@@ -86,12 +91,54 @@ public class addscheme extends Fragment {
             }
         });
 
-
         btnSave.setOnClickListener(v -> saveScheme());
 
-        loadSchemes();
+
+        ItemTouchHelper itemTouchHelper = getItemTouchHelper();
+        itemTouchHelper.attachToRecyclerView(recyclerViewSchemes);
+
+
 
         return rootView;
+    }
+
+    private @NonNull ItemTouchHelper getItemTouchHelper() {
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                SchemeAdapter adapter = (SchemeAdapter) recyclerViewSchemes.getAdapter();
+                Scheme schemeToDelete = adapter.getSchemeAt(position);
+
+                // Show confirmation dialog
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Confirm Deletion")
+                        .setMessage("Are you sure you want to delete this scheme?")
+                        .setPositiveButton("Delete", (dialog, which) -> {
+                            // Delete from database in background thread
+                            SchemeDao schemeDao = appDatabase.schemeDao();
+                            new Thread(() -> schemeDao.deleteScheme(schemeToDelete)).start();
+
+                            // Remove from list and notify adapter
+                            adapter.removeSchemeAt(position);
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> {
+                            // Restore the item (cancel swipe)
+                            adapter.notifyItemChanged(position);
+                        })
+                        .setCancelable(false)
+                        .show();
+            }
+        });
+
+
+        return itemTouchHelper;
     }
 
     private void saveScheme() {
@@ -134,7 +181,6 @@ public class addscheme extends Fragment {
 
         Scheme scheme = new Scheme(name, ltvType, price, minLimit, maxLimit, interest);
 
-        // Insert in background thread
         new Thread(() -> {
             appDatabase.schemeDao().insert(scheme);
             requireActivity().runOnUiThread(() -> {
@@ -169,8 +215,18 @@ public class addscheme extends Fragment {
 
     private void setupRecyclerView() {
         recyclerViewSchemes.setLayoutManager(new LinearLayoutManager(getContext()));
-        schemeAdapter = new com.example.loancalculator.adapter.SchemeAdapter();
+        schemeAdapter = new SchemeAdapter();
         recyclerViewSchemes.setAdapter(schemeAdapter);
+
+        schemeAdapter.setOnDeleteClickListener(scheme -> {
+            new Thread(() -> {
+                appDatabase.schemeDao().deleteScheme(scheme);
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(getContext(), "Scheme deleted", Toast.LENGTH_SHORT).show();
+                    loadSchemes();
+                });
+            }).start();
+        });
     }
 
     private void loadSchemes() {
@@ -179,4 +235,5 @@ public class addscheme extends Fragment {
             requireActivity().runOnUiThread(() -> schemeAdapter.setSchemeList(schemes));
         }).start();
     }
+    
 }

@@ -1,63 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="12dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="wrap_content">
 
-  >
+    <!-- Background Delete Button -->
+    <LinearLayout
+        android:id="@+id/deleteLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvSchemeName"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="tvSchemeName"
-        android:textColor="@color/text_red"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_delete"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="Delete"/>
+    </LinearLayout>
 
-    <GridLayout
+
+    <LinearLayout
+        android:id="@+id/foregroundLayout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:padding="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:useDefaultMargins="true">
-    <TextView
-        android:id="@+id/tvLtvType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tvLtvType"
-        android:layout_marginTop="4dp"/>
 
-    <TextView
-        android:id="@+id/tvLtvPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tvLtvPrice"/>
+        >
 
-    <TextView
-        android:id="@+id/tvmin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tvLimits"/>
+        <TextView
+            android:id="@+id/tvSchemeName"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="tvSchemeName"
+            android:textColor="@color/text_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/tvmax"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tvLimits"/>
 
-    <TextView
-        android:id="@+id/tvInterestYearly"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tvInterestYearly"/>
 
-    <TextView
-        android:id="@+id/tvInterestMonthly"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tvInterestMonthly"/>
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:useDefaultMargins="true">
+            <TextView
+                android:id="@+id/tvLtvType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tvLtvType"
+                android:layout_marginTop="4dp"/>
 
-    </GridLayout>
-</LinearLayout>
+            <TextView
+                android:id="@+id/tvLtvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tvLtvPrice"/>
+
+            <TextView
+                android:id="@+id/tvmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tvLimits"/>
+
+            <TextView
+                android:id="@+id/tvmax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tvLimits"/>
+
+            <TextView
+                android:id="@+id/tvInterestYearly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tvInterestYearly"/>
+
+            <TextView
+                android:id="@+id/tvInterestMonthly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tvInterestMonthly"/>
+
+        </GridLayout>
+    </LinearLayout>
+
+</FrameLayout>

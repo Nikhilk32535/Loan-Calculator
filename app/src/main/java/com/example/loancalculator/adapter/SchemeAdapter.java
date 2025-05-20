@@ -1,8 +1,11 @@
 package com.example.loancalculator.adapter;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +20,19 @@ import java.util.List;
 public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.SchemeViewHolder> {
 
     private List<Scheme> schemeList = new ArrayList<>();
+
+    // Define the interface
+    public interface OnDeleteClickListener {
+        void onDeleteClick(Scheme scheme);
+    }
+
+    // Declare the listener variable
+    private OnDeleteClickListener deleteClickListener;
+
+    // Correct setter
+    public void setOnDeleteClickListener(OnDeleteClickListener listener) {
+        this.deleteClickListener = listener;
+    }
 
     public void setSchemeList(List<Scheme> schemes) {
         this.schemeList = schemes;
@@ -35,18 +51,26 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.SchemeView
     public void onBindViewHolder(@NonNull SchemeViewHolder holder, int position) {
         Scheme scheme = schemeList.get(position);
 
-        holder.tvSchemeName.setText("SCHEME "+scheme.getName());
+        holder.tvSchemeName.setText("SCHEME " + scheme.getName());
         holder.tvLtvType.setText("LTV Type: " + scheme.getLtvType());
         holder.tvLtvPrice.setText("Price: ₹" + scheme.getPrice());
 
-        holder.tvmin.setText("Minimum : "+scheme.getMinLimit());
-        holder.tvmax.setText("Maximum : "+scheme.getMaxLimit());
+        holder.tvmin.setText("Minimum ₹" + scheme.getMinLimit());
+        holder.tvmax.setText("Maximum ₹" + scheme.getMaxLimit());
 
         holder.tvInterestYearly.setText("Yearly Interest: " + scheme.getInterest() + "%");
 
         // Calculate monthly interest (yearly / 12), formatted to 2 decimals
         float monthlyInterest = scheme.getInterest() / 12f;
         holder.tvInterestMonthly.setText(String.format("Monthly Interest: %.2f%%", monthlyInterest));
+
+        holder.btnDelete.setOnClickListener(v -> {
+            if (deleteClickListener != null) {
+                            if (deleteClickListener != null) {
+                                deleteClickListener.onDeleteClick(schemeList.get(holder.getAdapterPosition()));
+                            }
+            }
+        });
     }
 
     @Override
@@ -54,8 +78,14 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.SchemeView
         return schemeList.size();
     }
 
+    public Scheme getItem(int position) {
+        return schemeList.get(position);
+    }
+
     static class SchemeViewHolder extends RecyclerView.ViewHolder {
-        TextView tvSchemeName, tvLtvType, tvLtvPrice, tvmin , tvmax , tvInterestYearly, tvInterestMonthly;
+        TextView tvSchemeName, tvLtvType, tvLtvPrice, tvmin, tvmax, tvInterestYearly, tvInterestMonthly;
+        ImageButton btnDelete;
+        View foregroundLayout;
 
         public SchemeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +96,22 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.SchemeView
             tvmax = itemView.findViewById(R.id.tvmax);
             tvInterestYearly = itemView.findViewById(R.id.tvInterestYearly);
             tvInterestMonthly = itemView.findViewById(R.id.tvInterestMonthly);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
+            foregroundLayout = itemView.findViewById(R.id.foregroundLayout);
         }
     }
+    public Scheme getSchemeAt(int position) {
+        return schemeList.get(position);
+    }
+
+    public void removeSchemeAt(int position) {
+        notifyItemRemoved(position); // notify first
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            schemeList.remove(position);
+            notifyDataSetChanged();
+        }, 300); // Delay to let animation play
+    }
+
+
+
 }
