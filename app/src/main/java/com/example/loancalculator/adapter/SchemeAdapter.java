@@ -1,4 +1,4 @@
-package com.example.loancalculator;
+package com.example.loancalculator.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.loancalculator.R;
+import com.example.loancalculator.Scheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,7 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.SchemeView
     public void onBindViewHolder(@NonNull SchemeViewHolder holder, int position) {
         Scheme scheme = schemeList.get(position);
 
-        holder.tvSchemeName.setText("Scheme "+scheme.getName());
+        holder.tvSchemeName.setText("SCHEME "+scheme.getName());
         holder.tvLtvType.setText("LTV Type: " + scheme.getLtvType());
         holder.tvLtvPrice.setText("Price: ₹" + scheme.getPrice());
 

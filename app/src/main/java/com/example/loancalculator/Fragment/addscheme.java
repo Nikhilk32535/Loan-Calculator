@@ -21,8 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.loancalculator.R;
 import com.example.loancalculator.Scheme;
 import com.example.loancalculator.SchemeDatabase;
+import com.example.loancalculator.adapter.SchemeAdapter;
 
 import java.util.List;
+import java.util.Locale;
 
 public class addscheme extends Fragment {
 
@@ -33,7 +35,7 @@ public class addscheme extends Fragment {
 
     private float current75LtvPrice = 0f;
 
-    private com.example.loancalculator.SchemeAdapter schemeAdapter;
+    private SchemeAdapter schemeAdapter;
     private SchemeDatabase appDatabase;
 
     @Nullable
@@ -93,7 +95,7 @@ public class addscheme extends Fragment {
     }
 
     private void saveScheme() {
-        String name = etSchemeName.getText().toString().trim();
+        String name = etSchemeName.getText().toString().toUpperCase().trim();
         String interestStr = etInterest.getText().toString().trim();
         String minLimitStr = etMinLimit.getText().toString().trim();
         String maxLimitStr = etMaxLimit.getText().toString().trim();
@@ -167,7 +169,7 @@ public class addscheme extends Fragment {
 
     private void setupRecyclerView() {
         recyclerViewSchemes.setLayoutManager(new LinearLayoutManager(getContext()));
-        schemeAdapter = new com.example.loancalculator.SchemeAdapter();
+        schemeAdapter = new com.example.loancalculator.adapter.SchemeAdapter();
         recyclerViewSchemes.setAdapter(schemeAdapter);
     }
 

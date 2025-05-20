@@ -1,6 +1,7 @@
 package com.example.loancalculator;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -15,6 +16,10 @@ public interface SchemeDao {
 
     @Update
     void update(Scheme scheme);
+
+    @Delete
+    void deleteScheme(Scheme scheme);
+
 
     @Query("SELECT * FROM schemes")
     List<Scheme> getAllSchemes();

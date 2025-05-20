@@ -18,7 +18,7 @@
             android:id="@+id/purityheader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Purity"
+            android:text="Purity Chart Upadation"
             android:textColor="@color/text_red"
             android:textSize="20dp"
             android:gravity="center"
@@ -260,19 +260,6 @@
             android:backgroundTint="#FFD700" />
 
     </RelativeLayout>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Schemes"
-            android:textColor="@color/text_red"
-            android:textSize="25dp"
-            android:gravity="center"
-            android:padding="10dp"
-            android:background="@drawable/round_corner_foucused"
-            android:backgroundTint="@color/gold_yellow"/>
-
 
 
     </LinearLayout>
