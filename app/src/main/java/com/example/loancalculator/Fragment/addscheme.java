@@ -1,20 +1,11 @@
 package com.example.loancalculator.Fragment;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -22,7 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.loancalculator.BaseLTV.LTVDB;
+import com.example.loancalculator.BaseLTV.LTVSettings;
+import com.example.loancalculator.BaseLTV.LTVSettingsDao;
 import com.example.loancalculator.R;
 import com.example.loancalculator.Scheme;
 import com.example.loancalculator.SchemeDao;
@@ -30,179 +23,173 @@ import com.example.loancalculator.SchemeDatabase;
 import com.example.loancalculator.adapter.SchemeAdapter;
 
 import java.util.List;
-import java.util.concurrent.Executors;
 
 public class addscheme extends Fragment {
 
     private EditText et75LtvPrice, etSchemeName, etInterest, etMinLimit, etMaxLimit;
     private RadioGroup ltvRadioGroup;
-    private Button btnSave, btnUpdate75Ltv;
-    private RecyclerView recyclerViewSchemes;
-
+    private Button btnSave, btnUpdateBaseLTV;
+    private RecyclerView recyclerView;
     private float current75LtvPrice = 0f;
 
     private SchemeAdapter schemeAdapter;
-    private SchemeDatabase appDatabase;
+    private SchemeDatabase schemeDb;
+    private LTVSettingsDao ltvSettingsDao;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_addscheme, container, false);
-
-        // Initialize UI elements
-        et75LtvPrice = rootView.findViewById(R.id.et_ltv_75rate);
-        btnUpdate75Ltv = rootView.findViewById(R.id.btn_update75ltv);
-        etSchemeName = rootView.findViewById(R.id.et_scheme_name);
-        etInterest = rootView.findViewById(R.id.et_interest);
-        etMinLimit = rootView.findViewById(R.id.et_min_limit);
-        etMaxLimit = rootView.findViewById(R.id.et_max_limit);
-        ltvRadioGroup = rootView.findViewById(R.id.ltvRadioGroup);
-        btnSave = rootView.findViewById(R.id.btn_save);
-        recyclerViewSchemes = rootView.findViewById(R.id.recyclerViewSchemes);
-
-        appDatabase = SchemeDatabase.getInstance(getContext());
-
+        View view = inflater.inflate(R.layout.fragment_addscheme, container, false);
+        initViews(view);
+        initDb();
         setupRecyclerView();
+        loadBaseLTV();
         loadSchemes();
-
-        btnUpdate75Ltv.setOnClickListener(v -> {
-            String priceStr = et75LtvPrice.getText().toString().trim();
-            if (TextUtils.isEmpty(priceStr)) {
-                Toast.makeText(getContext(), "Enter 75LTV Price first", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            try {
-                current75LtvPrice = Float.parseFloat(priceStr);
-
-                new Thread(() -> {
-                    appDatabase.schemeDao().updatePricesForAllSchemes(current75LtvPrice);
-                    List<Scheme> updatedList = appDatabase.schemeDao().getAllSchemes();
-
-                    requireActivity().runOnUiThread(() -> {
-                        schemeAdapter.setSchemeList(updatedList);
-                        Toast.makeText(getContext(), "Schemes updated with new 75LTV price", Toast.LENGTH_SHORT).show();
-                    });
-                }).start();
-
-            } catch (NumberFormatException e) {
-                Toast.makeText(getContext(), "Invalid price", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnSave.setOnClickListener(v -> saveScheme());
-
-
-        ItemTouchHelper itemTouchHelper = getItemTouchHelper();
-        itemTouchHelper.attachToRecyclerView(recyclerViewSchemes);
-
-
-
-        return rootView;
+        setListeners();
+        return view;
     }
 
-    private @NonNull ItemTouchHelper getItemTouchHelper() {
+    private void initViews(View view) {
+        et75LtvPrice = view.findViewById(R.id.et_ltv_75rate);
+        btnUpdateBaseLTV = view.findViewById(R.id.btn_update75ltv);
+        etSchemeName = view.findViewById(R.id.et_scheme_name);
+        etInterest = view.findViewById(R.id.et_interest);
+        etMinLimit = view.findViewById(R.id.et_min_limit);
+        etMaxLimit = view.findViewById(R.id.et_max_limit);
+        ltvRadioGroup = view.findViewById(R.id.ltvRadioGroup);
+        btnSave = view.findViewById(R.id.btn_save);
+        recyclerView = view.findViewById(R.id.recyclerViewSchemes);
+    }
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
+    private void initDb() {
+        schemeDb = SchemeDatabase.getInstance(getContext());
+        ltvSettingsDao = LTVDB.getInstance(requireContext()).ltvSettingsDao();
+    }
 
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getAdapterPosition();
-                SchemeAdapter adapter = (SchemeAdapter) recyclerViewSchemes.getAdapter();
-                Scheme schemeToDelete = adapter.getSchemeAt(position);
+    private void setListeners() {
+        btnUpdateBaseLTV.setOnClickListener(v -> updateBaseLTV());
+        btnSave.setOnClickListener(v -> saveScheme());
+        new ItemTouchHelper(getSwipeToDeleteCallback()).attachToRecyclerView(recyclerView);
+    }
 
-                // Show confirmation dialog
-                new AlertDialog.Builder(requireContext())
-                        .setTitle("Confirm Deletion")
-                        .setMessage("Are you sure you want to delete this scheme?")
-                        .setPositiveButton("Delete", (dialog, which) -> {
-                            // Delete from database in background thread
-                            SchemeDao schemeDao = appDatabase.schemeDao();
-                            new Thread(() -> schemeDao.deleteScheme(schemeToDelete)).start();
+    private void updateBaseLTV() {
+        String priceStr = et75LtvPrice.getText().toString().trim();
+        if (TextUtils.isEmpty(priceStr)) {
+            showToast("Enter 75LTV Price first");
+            return;
+        }
 
-                            // Remove from list and notify adapter
-                            adapter.removeSchemeAt(position);
-                        })
-                        .setNegativeButton("Cancel", (dialog, which) -> {
-                            // Restore the item (cancel swipe)
-                            adapter.notifyItemChanged(position);
-                        })
-                        .setCancelable(false)
-                        .show();
-            }
-        });
+        try {
+            current75LtvPrice = Float.parseFloat(priceStr);
+            new Thread(() -> {
+                ltvSettingsDao.insertOrUpdate(new LTVSettings(current75LtvPrice));
+                schemeDb.schemeDao().updatePricesForAllSchemes(current75LtvPrice);
+                List<Scheme> updatedSchemes = schemeDb.schemeDao().getAllSchemes();
 
-
-        return itemTouchHelper;
+                requireActivity().runOnUiThread(() -> {
+                    schemeAdapter.setSchemeList(updatedSchemes);
+                    showToast("Base LTV updated successfully");
+                });
+            }).start();
+        } catch (NumberFormatException e) {
+            showToast("Invalid price");
+        }
     }
 
     private void saveScheme() {
-        String name = etSchemeName.getText().toString().toUpperCase().trim();
+        String name = etSchemeName.getText().toString().trim().toUpperCase();
         String interestStr = etInterest.getText().toString().trim();
         String minLimitStr = etMinLimit.getText().toString().trim();
         String maxLimitStr = etMaxLimit.getText().toString().trim();
 
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(interestStr) ||
                 TextUtils.isEmpty(minLimitStr) || TextUtils.isEmpty(maxLimitStr)) {
-            Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+            showToast("Please fill all fields");
             return;
         }
 
         if (current75LtvPrice <= 0) {
-            Toast.makeText(getContext(), "Update 75LTV price first", Toast.LENGTH_SHORT).show();
+            showToast("Update 75LTV price first");
             return;
         }
 
         int selectedLtvId = ltvRadioGroup.getCheckedRadioButtonId();
         if (selectedLtvId == -1) {
-            Toast.makeText(getContext(), "Select LTV type", Toast.LENGTH_SHORT).show();
+            showToast("Select LTV type");
             return;
         }
 
-        RadioButton selectedRadioButton = ltvRadioGroup.findViewById(selectedLtvId);
-        String ltvType = selectedRadioButton.getText().toString();
+        RadioButton selectedRadio = ltvRadioGroup.findViewById(selectedLtvId);
+        String ltvType = selectedRadio.getText().toString();
 
-        float interest, minLimit, maxLimit;
         try {
-            interest = Float.parseFloat(interestStr);
-            minLimit = Float.parseFloat(minLimitStr);
-            maxLimit = Float.parseFloat(maxLimitStr);
+            float interest = Float.parseFloat(interestStr);
+            float minLimit = Float.parseFloat(minLimitStr);
+            float maxLimit = Float.parseFloat(maxLimitStr);
+
+            new Thread(() -> {
+                Scheme existing = schemeDb.schemeDao().getSchemeByName(name);
+                if (existing == null) {
+                    int price = calculatePriceByLtvType(ltvType, current75LtvPrice);
+                    Scheme scheme = new Scheme(name, ltvType, price, minLimit, maxLimit, interest);
+                    schemeDb.schemeDao().insert(scheme);
+
+                    requireActivity().runOnUiThread(() -> {
+                        showToast("Scheme saved");
+                        clearInputs();
+                        loadSchemes();
+                    });
+                } else {
+                    requireActivity().runOnUiThread(() -> showToast("Scheme already exists!"));
+                }
+            }).start();
+
         } catch (NumberFormatException e) {
-            Toast.makeText(getContext(), "Invalid numeric values", Toast.LENGTH_SHORT).show();
-            return;
+            showToast("Invalid numeric values");
         }
+    }
 
-        int price = calculatePriceByLtvType(ltvType, current75LtvPrice);
+    private int calculatePriceByLtvType(String ltvType, float base75) {
+        switch (ltvType) {
+            case "50LTV": return (int) ((base75 / 75f) * 50f);
+            case "60LTV": return (int) ((base75 / 75f) * 60f);
+            case "65LTV": return (int) ((base75 / 75f) * 65f);
+            case "75LTV":
+            default: return (int) base75;
+        }
+    }
 
-        Scheme scheme = new Scheme(name, ltvType, price, minLimit, maxLimit, interest);
+    private void setupRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        schemeAdapter = new SchemeAdapter();
+        recyclerView.setAdapter(schemeAdapter);
 
-        new Thread(() -> {
-            appDatabase.schemeDao().insert(scheme);
+        schemeAdapter.setOnDeleteClickListener(scheme -> new Thread(() -> {
+            schemeDb.schemeDao().deleteScheme(scheme);
             requireActivity().runOnUiThread(() -> {
-                Toast.makeText(getContext(), "Scheme saved", Toast.LENGTH_SHORT).show();
-                clearInputs();
+                showToast("Scheme deleted");
                 loadSchemes();
             });
+        }).start());
+    }
+
+    private void loadSchemes() {
+        new Thread(() -> {
+            List<Scheme> schemes = schemeDb.schemeDao().getAllSchemes();
+            requireActivity().runOnUiThread(() -> schemeAdapter.setSchemeList(schemes));
         }).start();
     }
 
-    private int calculatePriceByLtvType(String ltvType, float base75Price) {
-        switch (ltvType) {
-            case "50LTV":
-                return (int) ((base75Price / 75f) * 50f);
-            case "60LTV":
-                return (int) ((base75Price / 75f) * 60f);
-            case "65LTV":
-                return (int) ((base75Price / 75f) * 65f);
-            case "75LTV":
-            default:
-                return (int) base75Price;
-        }
+    private void loadBaseLTV() {
+        new Thread(() -> {
+            LTVSettings settings = ltvSettingsDao.getBase75LTV();
+            if (settings != null) {
+                current75LtvPrice = settings.getBase75LTV();
+                requireActivity().runOnUiThread(() ->
+                        et75LtvPrice.setHint(String.valueOf((int) current75LtvPrice)));
+            }
+        }).start();
     }
 
     private void clearInputs() {
@@ -213,27 +200,30 @@ public class addscheme extends Fragment {
         ltvRadioGroup.clearCheck();
     }
 
-    private void setupRecyclerView() {
-        recyclerViewSchemes.setLayoutManager(new LinearLayoutManager(getContext()));
-        schemeAdapter = new SchemeAdapter();
-        recyclerViewSchemes.setAdapter(schemeAdapter);
-
-        schemeAdapter.setOnDeleteClickListener(scheme -> {
-            new Thread(() -> {
-                appDatabase.schemeDao().deleteScheme(scheme);
-                requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(getContext(), "Scheme deleted", Toast.LENGTH_SHORT).show();
-                    loadSchemes();
-                });
-            }).start();
-        });
+    private void showToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
-    private void loadSchemes() {
-        new Thread(() -> {
-            List<Scheme> schemes = appDatabase.schemeDao().getAllSchemes();
-            requireActivity().runOnUiThread(() -> schemeAdapter.setSchemeList(schemes));
-        }).start();
+    private ItemTouchHelper.SimpleCallback getSwipeToDeleteCallback() {
+        return new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override public boolean onMove(@NonNull RecyclerView rv, @NonNull RecyclerView.ViewHolder vh, @NonNull RecyclerView.ViewHolder tgt) { return false; }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder vh, int direction) {
+                int pos = vh.getAdapterPosition();
+                Scheme schemeToDelete = schemeAdapter.getSchemeAt(pos);
+
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Confirm Deletion")
+                        .setMessage("Are you sure you want to delete this scheme?")
+                        .setPositiveButton("Delete", (dialog, which) -> {
+                            new Thread(() -> schemeDb.schemeDao().deleteScheme(schemeToDelete)).start();
+                            schemeAdapter.removeSchemeAt(pos);
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> schemeAdapter.notifyItemChanged(pos))
+                        .setCancelable(false)
+                        .show();
+            }
+        };
     }
-    
 }

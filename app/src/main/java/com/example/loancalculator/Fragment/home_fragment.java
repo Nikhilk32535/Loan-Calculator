@@ -10,17 +10,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.loancalculator.BaseLTV.LTVDB;
+import com.example.loancalculator.BaseLTV.LTVSettings;
+import com.example.loancalculator.BaseLTV.LTVSettingsDao;
+import com.example.loancalculator.Scheme;
+import com.example.loancalculator.SchemeDao;
+import com.example.loancalculator.SchemeDatabase;
 import com.example.loancalculator.purity.DBHelper;
 import com.example.loancalculator.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class home_fragment extends Fragment {
 
     private EditText goldWeightEditText, stoneWeightEditText;
-    private TextView actualWeightTextView;
+    private TextView actualWeightTextView, btnBasePrice;
     private DBHelper dbHelper;
+    private LTVSettingsDao LTVSettingsDao;
+    private float current75LtvPrice = 0f;
+
 
     public home_fragment() {
         // Required empty public constructor
@@ -32,6 +45,7 @@ public class home_fragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home_fragment, container, false);
 
+        LTVSettingsDao = LTVDB.getInstance(requireContext()).ltvSettingsDao();
         goldWeightEditText = root.findViewById(R.id.goldweight);
         stoneWeightEditText = root.findViewById(R.id.stoneweight);
         actualWeightTextView = root.findViewById(R.id.actualweight);
@@ -45,6 +59,7 @@ public class home_fragment extends Fragment {
         Button btn87 = root.findViewById(R.id.eightyseven);
         Button btn91 = root.findViewById(R.id.ninetyone);
         Button btn99 = root.findViewById(R.id.ninetynine);
+        btnBasePrice = root.findViewById(R.id.baseprice);
 
         // Set Click Listeners to use dynamic DB values
         btn70.setOnClickListener(v -> calculatePureGold("70%"));
@@ -54,7 +69,64 @@ public class home_fragment extends Fragment {
         btn91.setOnClickListener(v -> calculatePureGold("91%"));
         btn99.setOnClickListener(v -> calculatePureGold("99%"));
 
+        loadBaseLTV();
+
         return root;
+    }
+
+    private void showEligibleSchemes(double netWeight) {
+        new Thread(() -> {
+            List<Scheme> schemes = SchemeDatabase.getInstance(requireContext()).schemeDao().getAllSchemes();
+
+            requireActivity().runOnUiThread(() -> {
+                LinearLayout schemeContainer = requireView().findViewById(R.id.schemeContainer);
+                schemeContainer.removeAllViews();
+
+                boolean foundEligible = false;
+
+                for (Scheme scheme : schemes) {
+                    double loanAmount = netWeight * scheme.getPrice();
+                    double monthlyInterest = (loanAmount * scheme.getInterest()) / 100 / 12;
+
+                    if (loanAmount >= scheme.getMinLimit() && loanAmount <= scheme.getMaxLimit()) {
+                        foundEligible = true;
+
+                        View cardView = LayoutInflater.from(getContext()).inflate(R.layout.scheme_card, schemeContainer, false);
+
+                        TextView schemeNameView = cardView.findViewById(R.id.tvSchemeName);
+                        TextView loanAmountView = cardView.findViewById(R.id.tvLoanAmount);
+                        TextView interestView = cardView.findViewById(R.id.tvMonthlyInterest);
+
+                        schemeNameView.setText(scheme.getName());
+                        loanAmountView.setText("Loan Amount: ₹" + (int) loanAmount);
+                        interestView.setText("Monthly Interest: ₹" + (int) monthlyInterest);
+
+                        schemeContainer.addView(cardView);
+                    }
+                }
+
+                if (!foundEligible) {
+                    TextView noSchemeView = new TextView(getContext());
+                    noSchemeView.setText("No eligible schemes found.");
+                    noSchemeView.setPadding(16, 16, 16, 16);
+                    schemeContainer.addView(noSchemeView);
+                }
+            });
+        }).start();
+    }
+
+
+
+
+    private void loadBaseLTV() {
+        new Thread(() -> {
+            LTVSettings settings = LTVSettingsDao.getBase75LTV();
+            if (settings != null) {
+                current75LtvPrice = settings.getBase75LTV();
+                requireActivity().runOnUiThread(() ->
+                        btnBasePrice.setText("Base LTV : "+String.valueOf((int) current75LtvPrice)));
+            }
+        }).start();
     }
 
     private void calculatePureGold(String purityLabel) {
@@ -85,6 +157,8 @@ public class home_fragment extends Fragment {
             Log.e("findmulti", "Multiplier: " + purityMultiplier);
             double actualGold = (netWeight * purityMultiplier) / 100;
             actualWeightTextView.setText(String.format("Net Weight : %.2f g", actualGold));
+
+            showEligibleSchemes(actualGold);
 
         } catch (NumberFormatException e) {
             Toast.makeText(getContext(), "Invalid number format", Toast.LENGTH_SHORT).show();

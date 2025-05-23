@@ -24,6 +24,10 @@ public interface SchemeDao {
     @Query("SELECT * FROM schemes")
     List<Scheme> getAllSchemes();
 
+    @Query("SELECT * FROM schemes WHERE name = :schemeName LIMIT 1")
+    Scheme getSchemeByName(String schemeName);
+
+
     @Query("UPDATE schemes SET price = " +
             "CASE " +
             "WHEN ltvType = '50LTV' THEN CAST((:price75 / 75.0) * 50 AS INTEGER) " +

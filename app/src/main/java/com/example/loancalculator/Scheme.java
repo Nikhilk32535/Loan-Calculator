@@ -16,6 +16,7 @@ public class Scheme {
     private float maxLimit;
     private float interest;
 
+
     public Scheme(String name, String ltvType, int price, float minLimit, float maxLimit, float interest) {
         this.name = name;
         this.ltvType = ltvType;
@@ -47,4 +48,5 @@ public class Scheme {
 
     public float getInterest() { return interest; }
     public void setInterest(float interest) { this.interest = interest; }
+
 }

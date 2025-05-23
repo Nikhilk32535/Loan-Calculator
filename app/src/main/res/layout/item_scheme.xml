@@ -15,8 +15,9 @@
 
         <ImageButton
             android:id="@+id/btnDelete"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="500dp"
             android:src="@android:drawable/ic_delete"
             android:background="?selectableItemBackgroundBorderless"
             android:contentDescription="Delete"/>
