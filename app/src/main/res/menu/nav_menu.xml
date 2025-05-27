@@ -5,13 +5,13 @@
     <item
         android:id="@+id/nav_home"
         android:title="Home"
-        android:icon="@drawable/homebtn"
+        android:icon="@drawable/ic_purity"
         />
 
 
     <item
         android:id="@+id/set_purity"
-        android:title="Set Value"
+        android:title="Set purity"
         android:icon="@drawable/baseline_edit_24"
         />
 
@@ -20,5 +20,12 @@
         android:title="Set Scheme"
         android:icon="@drawable/baseline_edit_24"
         />
+
+    <item
+        android:id="@+id/nav_manual"
+        android:title="User Manual"
+        android:icon="@drawable/about_us"
+        />
+
 
 </menu>

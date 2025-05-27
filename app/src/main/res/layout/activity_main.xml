@@ -43,6 +43,19 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_menu" />
+        app:menu="@menu/nav_menu" >
+
+        <TextView
+            android:id="@+id/nav_footer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:padding="16dp"
+            android:text=" @NK Production"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/text_grey"
+            android:gravity="center_horizontal"
+             />
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

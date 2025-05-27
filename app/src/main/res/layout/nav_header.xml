@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nikhil's App"
+        android:text="Loan Calculator"
         android:textSize="35sp"
         android:layout_alignParentBottom="true"
         android:layout_margin="15dp"

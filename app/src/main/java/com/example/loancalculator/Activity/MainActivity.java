@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.loancalculator.Fragment.addscheme;
 import com.example.loancalculator.Fragment.home_fragment;
+import com.example.loancalculator.Fragment.user_manual;
 import com.example.loancalculator.R;
 import com.example.loancalculator.purity.set_purity;
 import com.google.android.material.navigation.NavigationView;
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                    setFrameLayout(new set_purity());
                 } else if (id == R.id.set_scheme) {
                     setFrameLayout(new addscheme());
+                } else if (id == R.id.nav_manual) {
+                    setFrameLayout(new user_manual());
                 }
 
                 drawerLayout.closeDrawers(); // close drawer after selection
