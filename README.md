@@ -81,6 +81,9 @@ A built-in **Manual Page** explains:
 
 ## 📸 Screenshots
 ![WhatsApp Image 2025-06-01 at 17 42 37_5510951c](https://github.com/user-attachments/assets/ce51cad7-354e-415b-9f6e-c165db7e65bf)
+![WhatsApp Image 2025-06-01 at 17 42 36_fee3268b](https://github.com/user-attachments/assets/6f96d9f2-2a4c-4504-a236-cde7dbb5ff25)
+![WhatsApp Image 2025-06-01 at 17 42 35_d2dde8ef](https://github.com/user-attachments/assets/3acc76e1-6f94-4c13-ac7c-0663171856a4)
+![WhatsApp Image 2025-06-01 at 17 42 35_a217c867](https://github.com/user-attachments/assets/f0d22b04-bfda-4d32-a3b7-93323ddda125)
 
 
 ---
