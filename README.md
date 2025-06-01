@@ -80,10 +80,10 @@ A built-in **Manual Page** explains:
 ---
 
 ## 📸 Screenshots
-<img src="https://github.com/user-attachments/assets/ce51cad7-354e-415b-9f6e-c165db7e65bf" alt="Screenshot 1" width="300"/>
-<img src="https://github.com/user-attachments/assets/6f96d9f2-2a4c-4504-a236-cde7dbb5ff25" alt="Screenshot 2" width="300"/>
-<img src="https://github.com/user-attachments/assets/3acc76e1-6f94-4c13-ac7c-0663171856a4" alt="Screenshot 3" width="300"/>
-<img src="https://github.com/user-attachments/assets/f0d22b04-bfda-4d32-a3b7-93323ddda125" alt="Screenshot 4" width="300"/>
+<img src="https://github.com/user-attachments/assets/ce51cad7-354e-415b-9f6e-c165db7e65bf" alt="Screenshot 1" width="200"/>
+<img src="https://github.com/user-attachments/assets/6f96d9f2-2a4c-4504-a236-cde7dbb5ff25" alt="Screenshot 2" width="200"/>
+<img src="https://github.com/user-attachments/assets/3acc76e1-6f94-4c13-ac7c-0663171856a4" alt="Screenshot 3" width="200"/>
+<img src="https://github.com/user-attachments/assets/f0d22b04-bfda-4d32-a3b7-93323ddda125" alt="Screenshot 4" width="200"/>
 
 
 ---
