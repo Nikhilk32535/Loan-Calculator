@@ -65,7 +65,7 @@ A built-in **Manual Page** explains:
 
 ## 🛠 Tech Stack
 - 💻 Android (Java)
-- 📁 SQLite – For local data storage
+- 📁 RoomDB – For local data storage
 - 📐 XML – Custom UI layouts
 - 🧩 Fragments – Clean navigation
 - 📊 Custom business logic – LTV-based pricing
@@ -89,4 +89,4 @@ Free to use, modify, and distribute.
 
 ---
 
-**Made with 💡 by Nikhil K**
+**Made with 💡 by Nikhil Kumar**
