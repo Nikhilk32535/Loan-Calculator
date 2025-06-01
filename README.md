@@ -80,7 +80,8 @@ A built-in **Manual Page** explains:
 ---
 
 ## 📸 Screenshots
-> *(Add screenshots here: weight input page, scheme card, manual page, etc.)*
+![WhatsApp Image 2025-06-01 at 17 42 37_5510951c](https://github.com/user-attachments/assets/ce51cad7-354e-415b-9f6e-c165db7e65bf)
+
 
 ---
 
