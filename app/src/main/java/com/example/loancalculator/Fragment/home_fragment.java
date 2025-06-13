@@ -96,10 +96,13 @@ public class home_fragment extends Fragment {
                         TextView schemeNameView = cardView.findViewById(R.id.tvSchemeName);
                         TextView loanAmountView = cardView.findViewById(R.id.tvLoanAmount);
                         TextView interestView = cardView.findViewById(R.id.tvMonthlyInterest);
+                        TextView interestRateView = cardView.findViewById(R.id.tvInterestRate);
 
+                        Float  intrestrate=scheme.getInterest()/12;
                         schemeNameView.setText(scheme.getName());
                         loanAmountView.setText("Loan Amount: ₹" + (int) loanAmount);
                         interestView.setText("Monthly Interest: ₹" + (int) monthlyInterest);
+                        interestRateView.setText(String.format("%.2f%% Interest",intrestrate));
 
                         schemeContainer.addView(cardView);
                     }
