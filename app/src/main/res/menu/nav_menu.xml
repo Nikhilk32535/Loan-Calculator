@@ -1,31 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Main Section -->
+    <group android:id="@+id/group_main" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home"
+            android:icon="@drawable/ic_purity" />
+    </group>
 
-    <item
-        android:id="@+id/nav_home"
-        android:title="Home"
-        android:icon="@drawable/ic_purity"
-        />
+    <!-- Settings Section -->
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/set_purity"
+                android:title="Set Purity"
+                android:icon="@drawable/baseline_edit_24" />
 
+            <item
+                android:id="@+id/set_scheme"
+                android:title="Set Scheme"
+                android:icon="@drawable/baseline_edit_24" />
+        </menu>
+    </item>
 
-    <item
-        android:id="@+id/set_purity"
-        android:title="Set purity"
-        android:icon="@drawable/baseline_edit_24"
-        />
-
-    <item
-        android:id="@+id/set_scheme"
-        android:title="Set Scheme"
-        android:icon="@drawable/baseline_edit_24"
-        />
-
-    <item
-        android:id="@+id/nav_manual"
-        android:title="User Manual"
-        android:icon="@drawable/about_us"
-        />
-
-
+    <!-- Help Section -->
+    <item android:title="Help">
+        <menu>
+            <item
+                android:id="@+id/nav_manual"
+                android:title="User Manual"
+                android:icon="@drawable/about_us" />
+        </menu>
+    </item>
 </menu>

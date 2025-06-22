@@ -1,5 +1,6 @@
 package com.example.loancalculator.Fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -82,33 +83,44 @@ public class home_fragment extends Fragment {
                 LinearLayout schemeContainer = requireView().findViewById(R.id.schemeContainer);
                 schemeContainer.removeAllViews();
 
-                boolean foundEligible = false;
+                boolean foundAny = false;
 
                 for (Scheme scheme : schemes) {
-                    double loanAmount = netWeight * scheme.getPrice();
-                    double monthlyInterest = (loanAmount * scheme.getInterest()) / 100 / 12;
+                    double originalLoanAmount = netWeight * scheme.getPrice();
+                    double loanAmountToShow;
 
-                    if (loanAmount >= scheme.getMinLimit() && loanAmount <= scheme.getMaxLimit()) {
-                        foundEligible = true;
-
-                        View cardView = LayoutInflater.from(getContext()).inflate(R.layout.scheme_card, schemeContainer, false);
-
-                        TextView schemeNameView = cardView.findViewById(R.id.tvSchemeName);
-                        TextView loanAmountView = cardView.findViewById(R.id.tvLoanAmount);
-                        TextView interestView = cardView.findViewById(R.id.tvMonthlyInterest);
-                        TextView interestRateView = cardView.findViewById(R.id.tvInterestRate);
-
-                        Float  intrestrate=scheme.getInterest()/12;
-                        schemeNameView.setText(scheme.getName());
-                        loanAmountView.setText("Loan Amount: ₹" + (int) loanAmount);
-                        interestView.setText("Monthly Interest: ₹" + (int) monthlyInterest);
-                        interestRateView.setText(String.format("%.2f%% Interest",intrestrate));
-
-                        schemeContainer.addView(cardView);
+                    // Apply logic
+                    if (originalLoanAmount < scheme.getMinLimit()) {
+                        continue; // Skip if below min
+                    } else if (originalLoanAmount > scheme.getMaxLimit()) {
+                        loanAmountToShow = scheme.getMaxLimit(); // Cap to max
+                    } else {
+                        loanAmountToShow = originalLoanAmount;
                     }
+
+                    double monthlyInterest = (loanAmountToShow * scheme.getInterest()) / 100 / 12;
+
+                    // UI setup
+                    foundAny = true;
+                    View cardView = LayoutInflater.from(getContext()).inflate(R.layout.scheme_card, schemeContainer, false);
+
+                    TextView schemeNameView = cardView.findViewById(R.id.tvSchemeName);
+                    TextView loanAmountView = cardView.findViewById(R.id.tvLoanAmount);
+                    TextView interestView = cardView.findViewById(R.id.tvMonthlyInterest);
+                    TextView interestRateView = cardView.findViewById(R.id.tvInterestRate);
+
+                    Float intrestRatePerMonth = scheme.getInterest() / 12;
+
+                    schemeNameView.setText(scheme.getName());
+                    loanAmountView.setText("Loan Amount: ₹" + (int) loanAmountToShow);
+                    interestView.setText("Monthly Interest: ₹" + (int) monthlyInterest);
+                    interestRateView.setText(String.format("%.2f%% Interest", intrestRatePerMonth));
+
+
+                    schemeContainer.addView(cardView);
                 }
 
-                if (!foundEligible) {
+                if (!foundAny) {
                     TextView noSchemeView = new TextView(getContext());
                     noSchemeView.setText("No eligible schemes found.");
                     noSchemeView.setPadding(16, 16, 16, 16);
@@ -117,6 +129,7 @@ public class home_fragment extends Fragment {
             });
         }).start();
     }
+
 
 
 
