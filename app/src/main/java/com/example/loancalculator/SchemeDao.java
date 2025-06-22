@@ -3,6 +3,7 @@ package com.example.loancalculator;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -14,19 +15,24 @@ public interface SchemeDao {
     @Insert
     void insert(Scheme scheme);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<Scheme> schemes); // ✅ For syncing from Firebase
+
     @Update
     void update(Scheme scheme);
 
     @Delete
     void deleteScheme(Scheme scheme);
 
-
-    @Query("SELECT * FROM schemes")
+    @Query("SELECT * FROM schemes ORDER BY name ASC")
     List<Scheme> getAllSchemes();
+
 
     @Query("SELECT * FROM schemes WHERE name = :schemeName LIMIT 1")
     Scheme getSchemeByName(String schemeName);
 
+    @Query("DELETE FROM schemes")
+    void clearAll(); // ✅ Clear local DB before fresh Firebase sync
 
     @Query("UPDATE schemes SET price = " +
             "CASE " +
@@ -36,6 +42,4 @@ public interface SchemeDao {
             "WHEN ltvType = '75LTV' THEN CAST(:price75 AS INTEGER) " +
             "ELSE price END")
     void updatePricesForAllSchemes(float price75);
-
-
 }

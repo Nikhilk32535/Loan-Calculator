@@ -21,6 +21,9 @@ import com.example.loancalculator.Scheme;
 import com.example.loancalculator.SchemeDao;
 import com.example.loancalculator.SchemeDatabase;
 import com.example.loancalculator.adapter.SchemeAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -44,7 +47,9 @@ public class addscheme extends Fragment {
         initViews(view);
         initDb();
         setupRecyclerView();
-        loadBaseLTV();
+        loadSchemes();
+        uploadAllLocalSchemesToFirebase();
+        syncFromFirebaseToLocal();
         loadSchemes();
         setListeners();
         return view;
@@ -82,20 +87,44 @@ public class addscheme extends Fragment {
 
         try {
             current75LtvPrice = Float.parseFloat(priceStr);
+
             new Thread(() -> {
+                // 1. Save new base to local DB
                 ltvSettingsDao.insertOrUpdate(new LTVSettings(current75LtvPrice));
+
+                // 2. Update base LTV in Firebase
+                FirebaseDatabase.getInstance().getReference("BaseLTV")
+                        .setValue(current75LtvPrice);
+
+                // 3. Update all local scheme prices
                 schemeDb.schemeDao().updatePricesForAllSchemes(current75LtvPrice);
+
+                // 4. Get updated schemes from local DB
                 List<Scheme> updatedSchemes = schemeDb.schemeDao().getAllSchemes();
 
-                requireActivity().runOnUiThread(() -> {
-                    schemeAdapter.setSchemeList(updatedSchemes);
-                    showToast("Base LTV updated successfully");
-                });
+                // 5. Delete all schemes from Firebase
+                FirebaseDatabase.getInstance().getReference("Schemes").removeValue()
+                        .addOnSuccessListener(aVoid -> {
+                            // 6. Re-upload updated schemes to Firebase
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Schemes");
+                            for (Scheme scheme : updatedSchemes) {
+                                ref.child(scheme.getName()).setValue(scheme);
+                            }
+
+                            // 7. Update UI
+                            requireActivity().runOnUiThread(() -> {
+                                schemeAdapter.setSchemeList(updatedSchemes);
+                                showToast("✅ Base LTV updated. Schemes refreshed online & offline.");
+                            });
+                        });
+
             }).start();
         } catch (NumberFormatException e) {
             showToast("Invalid price");
         }
     }
+
+
 
     private void saveScheme() {
         String name = etSchemeName.getText().toString().trim().toUpperCase();
@@ -134,6 +163,7 @@ public class addscheme extends Fragment {
                     int price = calculatePriceByLtvType(ltvType, current75LtvPrice);
                     Scheme scheme = new Scheme(name, ltvType, price, minLimit, maxLimit, interest);
                     schemeDb.schemeDao().insert(scheme);
+                    uploadSchemeToFirebase(scheme);
 
                     requireActivity().runOnUiThread(() -> {
                         showToast("Scheme saved");
@@ -148,6 +178,22 @@ public class addscheme extends Fragment {
         } catch (NumberFormatException e) {
             showToast("Invalid numeric values");
         }
+    }
+
+    private void uploadSchemeToFirebase(Scheme scheme) {
+        FirebaseDatabase.getInstance().getReference("Schemes")
+                .child(scheme.getName())
+                .setValue(scheme)
+                .addOnSuccessListener(aVoid ->
+                        requireActivity().runOnUiThread(() ->
+                                showToast("\u2705 Scheme also uploaded online")
+                        )
+                )
+                .addOnFailureListener(e ->
+                        requireActivity().runOnUiThread(() ->
+                                showToast("\u274C Upload failed: " + e.getMessage())
+                        )
+                );
     }
 
     private int calculatePriceByLtvType(String ltvType, float base75) {
@@ -184,13 +230,33 @@ public class addscheme extends Fragment {
     private void loadBaseLTV() {
         new Thread(() -> {
             LTVSettings settings = ltvSettingsDao.getBase75LTV();
+
             if (settings != null) {
                 current75LtvPrice = settings.getBase75LTV();
                 requireActivity().runOnUiThread(() ->
                         et75LtvPrice.setHint(String.valueOf((int) current75LtvPrice)));
+            } else {
+                // Fetch from Firebase if not found locally
+                FirebaseDatabase.getInstance().getReference("BaseLTV")
+                        .get()
+                        .addOnSuccessListener(dataSnapshot -> {
+                            if (dataSnapshot.exists()) {
+                                float firebaseLTV = dataSnapshot.getValue(Float.class);
+                                current75LtvPrice = firebaseLTV;
+
+                                // Save locally too
+                                new Thread(() -> {
+                                    ltvSettingsDao.insertOrUpdate(new LTVSettings(firebaseLTV));
+                                }).start();
+
+                                et75LtvPrice.setHint(String.valueOf((int) firebaseLTV));
+                                showToast("Base LTV loaded from cloud");
+                            }
+                        });
             }
         }).start();
     }
+
 
     private void clearInputs() {
         etSchemeName.setText("");
@@ -206,7 +272,10 @@ public class addscheme extends Fragment {
 
     private ItemTouchHelper.SimpleCallback getSwipeToDeleteCallback() {
         return new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            @Override public boolean onMove(@NonNull RecyclerView rv, @NonNull RecyclerView.ViewHolder vh, @NonNull RecyclerView.ViewHolder tgt) { return false; }
+            @Override
+            public boolean onMove(@NonNull RecyclerView rv, @NonNull RecyclerView.ViewHolder vh, @NonNull RecyclerView.ViewHolder tgt) {
+                return false;
+            }
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder vh, int direction) {
@@ -217,7 +286,17 @@ public class addscheme extends Fragment {
                         .setTitle("Confirm Deletion")
                         .setMessage("Are you sure you want to delete this scheme?")
                         .setPositiveButton("Delete", (dialog, which) -> {
-                            new Thread(() -> schemeDb.schemeDao().deleteScheme(schemeToDelete)).start();
+                            new Thread(() -> {
+                                schemeDb.schemeDao().deleteScheme(schemeToDelete);
+                                FirebaseDatabase.getInstance().getReference("Schemes")
+                                        .child(schemeToDelete.getName())
+                                        .removeValue();
+
+                                requireActivity().runOnUiThread(() -> {
+                                    showToast("Scheme deleted");
+                                    loadSchemes();
+                                });
+                            }).start();
                             schemeAdapter.removeSchemeAt(pos);
                         })
                         .setNegativeButton("Cancel", (dialog, which) -> schemeAdapter.notifyItemChanged(pos))
@@ -226,4 +305,76 @@ public class addscheme extends Fragment {
             }
         };
     }
+
+    private void uploadAllLocalSchemesToFirebase() {
+        new Thread(() -> {
+            List<Scheme> schemes = schemeDb.schemeDao().getAllSchemes();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Schemes");
+
+            for (Scheme scheme : schemes) {
+                ref.child(scheme.getName()).setValue(scheme);
+            }
+
+            requireActivity().runOnUiThread(() ->
+                    showToast("All local schemes uploaded to Firebase"));
+        }).start();
+    }
+
+    private void syncFromFirebaseToLocal() {
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+
+        // Step 1: Fetch BaseLTV
+        rootRef.child("BaseLTV").get().addOnSuccessListener(baseSnapshot -> {
+            if (baseSnapshot.exists()) {
+                Float baseLtvValue = baseSnapshot.getValue(Float.class);
+                if (baseLtvValue != null) {
+                    current75LtvPrice = baseLtvValue;
+
+                    new Thread(() -> {
+                        ltvSettingsDao.insertOrUpdate(new LTVSettings(current75LtvPrice));
+
+                        // Ensure UI is still active before updating
+                        if (isAdded() && getActivity() != null) {
+                            requireActivity().runOnUiThread(() -> {
+                                if (et75LtvPrice != null) {
+                                    et75LtvPrice.setHint(String.valueOf((int) current75LtvPrice));
+                                }
+                            });
+                        }
+                    }).start();
+                }
+            }
+        }).addOnFailureListener(e -> showToast("❌ Failed to load BaseLTV"));
+
+        // Step 2: Fetch All Schemes
+        rootRef.child("Schemes").get().addOnSuccessListener(snapshot -> {
+            if (snapshot.exists()) {
+                List<Scheme> firebaseSchemes = new java.util.ArrayList<>();
+
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    Scheme scheme = child.getValue(Scheme.class);
+                    if (scheme != null) {
+                        firebaseSchemes.add(scheme);
+                    }
+                }
+
+                new Thread(() -> {
+                    schemeDb.schemeDao().clearAll();
+                    schemeDb.schemeDao().insertAll(firebaseSchemes);
+
+                    // Ensure UI is active before updating adapter
+                    if (isAdded() && getActivity() != null) {
+                        requireActivity().runOnUiThread(() -> {
+                            if (schemeAdapter != null) {
+                                schemeAdapter.setSchemeList(firebaseSchemes);
+                            }
+                            showToast("✅ Synced from cloud.");
+                        });
+                    }
+                }).start();
+            }
+        }).addOnFailureListener(e -> showToast("❌ Failed to sync schemes"));
+    }
+
+
 }

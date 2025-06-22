@@ -43,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ID, 1);
         values.put(COLUMN_PURITY_70, 75);
         values.put(COLUMN_PURITY_75, 80);
-        values.put(COLUMN_PURITY_83, 87);
+        values.put(COLUMN_PURITY_83, 90);
         values.put(COLUMN_PURITY_87, 94);
         values.put(COLUMN_PURITY_91, 97);
         values.put(COLUMN_PURITY_99, 99);

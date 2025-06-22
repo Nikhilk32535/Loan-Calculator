@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "775300259357",
+    "project_id": "loan-calci",
+    "storage_bucket": "loan-calci.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775300259357:android:c569fde4d1024d1e1c70f4",
+        "android_client_info": {
+          "package_name": "com.example.loancalculator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-aQTmITXW7LcYCyTiqxNRs4IQjJ_4Djk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loancalculator.R;
 import com.example.loancalculator.Scheme;
+import com.example.loancalculator.Utility.NumberFormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +56,8 @@ public class SchemeAdapter extends RecyclerView.Adapter<SchemeAdapter.SchemeView
         holder.tvLtvType.setText("LTV Type: " + scheme.getLtvType());
         holder.tvLtvPrice.setText("Price: ₹" + scheme.getPrice());
 
-        holder.tvmin.setText("Minimum ₹" + scheme.getMinLimit());
-        holder.tvmax.setText("Maximum ₹" + scheme.getMaxLimit());
+        holder.tvmin.setText("Minimum ₹" +  NumberFormatUtil.formatIndianNumber(scheme.getMinLimit()));
+        holder.tvmax.setText("Maximum ₹" +  NumberFormatUtil.formatIndianNumber(scheme.getMaxLimit()));
 
         holder.tvInterestYearly.setText("Yearly Interest: " + scheme.getInterest() + "%");
 

@@ -2,12 +2,17 @@ package com.example.loancalculator.Activity;  // Change this to your actual pack
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -73,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
                     setFrameLayout(new addscheme());
                 } else if (id == R.id.nav_manual) {
                     setFrameLayout(new user_manual());
+                }else if (id == R.id.nav_authenticate) {
+                    showAuthDialog();
+                    return true;
                 }
 
                 drawerLayout.closeDrawers(); // close drawer after selection
@@ -84,6 +92,33 @@ public class MainActivity extends AppCompatActivity {
         frameLayout = findViewById(R.id.main_container);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_container, fragment).commit();
+    }
+
+    private void showAuthDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Authentication");
+
+        final EditText input = new EditText(this);
+        input.setHint("Enter password");
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        builder.setPositiveButton("Verify", (dialog, which) -> {
+            String enteredPassword = input.getText().toString().trim();
+            if (enteredPassword.equals("007007")) {
+                // Show the settings group
+                NavigationView navView = findViewById(R.id.nav_view);
+                Menu menu = navView.getMenu();
+                menu.setGroupVisible(R.id.settings_group, true);
+                Toast.makeText(this, "Access granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Incorrect password", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+        builder.show();
     }
 
 }
