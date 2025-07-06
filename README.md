@@ -14,7 +14,7 @@ A simple and powerful Android app to calculate eligible gold loan amounts based 
   ```
 
 ### 🪙 Purity-Based Loan Estimation
-- Select **Gold Purity** (e.g., 22K, 24K)
+- Select **Gold Purity** (e.g., 75, 87)
 - App uses **purity multiplier** to compute gold value
 - Displays eligible loan amounts based on available schemes
 
@@ -78,12 +78,14 @@ A built-in **Manual Page** explains:
 - 📄 Export scheme report as PDF
 
 ---
+## 🧭 Downlaod
+- 👉 [Click Here To Download App ](https://github.com/Nikhilk32535/Loan-Calculator/releases/download/v1.0/Loan_Calculator.apk)
 
+---
 ## 📸 Screenshots
-<img src="https://github.com/user-attachments/assets/ce51cad7-354e-415b-9f6e-c165db7e65bf" alt="Screenshot 1" width="200"/>
-<img src="https://github.com/user-attachments/assets/6f96d9f2-2a4c-4504-a236-cde7dbb5ff25" alt="Screenshot 2" width="200"/>
-<img src="https://github.com/user-attachments/assets/3acc76e1-6f94-4c13-ac7c-0663171856a4" alt="Screenshot 3" width="200"/>
-<img src="https://github.com/user-attachments/assets/f0d22b04-bfda-4d32-a3b7-93323ddda125" alt="Screenshot 4" width="200"/>
+![WhatsApp Image 2025-07-06 at 13 06 12_711f5a22](https://github.com/user-attachments/assets/ec69a8c9-8074-488f-b2e6-1f833be569b5)
+![WhatsApp Image 2025-07-06 at 13 06 13_22ac45e8](https://github.com/user-attachments/assets/1d7aed63-e0f6-43b0-ac0f-23654569d47c)
+![WhatsApp Image 2025-07-06 at 13 06 13_3c8fde9e](https://github.com/user-attachments/assets/c068efc3-cec1-4b09-b5e1-db00efbb54d6)
 
 
 ---
