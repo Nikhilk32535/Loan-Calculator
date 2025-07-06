@@ -1,4 +1,18 @@
+# 💰 Gold Loan Calculator App
 
+A simple and powerful Android app to calculate eligible gold loan amounts based on purity and weight. Designed for everyday users and admins, this app helps estimate loan eligibility and manage loan schemes with ease.
+
+---
+
+## 📲 Features
+
+### 🧮 Smart Gold Weight Calculation
+- Input **Gross Weight** and **Stone Weight**
+- App automatically calculates:
+  
+Net Weight = Gross Weight - Stone Weight
+
+---
 ### 🪙 Purity-Based Loan Estimation
 - Select **Gold Purity** (e.g., 75, 87)
 - App uses **purity multiplier** to compute gold value
