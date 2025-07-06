@@ -1,17 +1,3 @@
-# 💰 Gold Loan Calculator App
-
-A simple and powerful Android app to calculate eligible gold loan amounts based on purity and weight. Designed for everyday users and admins, this app helps estimate loan eligibility and manage loan schemes with ease.
-
----
-
-## 📲 Features
-
-### 🧮 Smart Gold Weight Calculation
-- Input **Gross Weight** and **Stone Weight**
-- App automatically calculates:
-  ```
-  Net Weight = Gross Weight - Stone Weight
-  ```
 
 ### 🪙 Purity-Based Loan Estimation
 - Select **Gold Purity** (e.g., 75, 87)
@@ -28,6 +14,8 @@ Each scheme card includes:
 - 📈 **Yearly Interest Rate** (converted to Monthly)
 - 💸 **Minimum & Maximum Loan Limits**
 
+> You can also view **all available schemes** on the **Schemes screen**, which shows full details of each scheme in card format.
+
 ---
 
 ## 🛠 Admin Controls
@@ -36,8 +24,8 @@ Each scheme card includes:
 - Enter one price type (e.g., 75LTV)
 - App auto-generates other LTV values (50%, 60%, 65%)
 - Customize:
-  - Interest Rate
-  - Min & Max Limits
+- Interest Rate
+- Min & Max Limits
 
 ### 🧪 Update Gold Purity Multipliers
 - Change multiplier values for 22K, 24K, etc.
@@ -78,15 +66,18 @@ A built-in **Manual Page** explains:
 - 📄 Export scheme report as PDF
 
 ---
-## 🧭 Downlaod
-- 👉 [Click Here To Download App ](https://github.com/Nikhilk32535/Loan-Calculator/releases/download/v1.0/Loan_Calculator.apk)
+
+## 📥 Download
+
+👉 [Click Here To Download App](https://github.com/Nikhilk32535/Loan-Calculator/releases/download/v1.0/Loan_Calculator.apk)
 
 ---
-## 📸 Screenshots
-![WhatsApp Image 2025-07-06 at 13 06 12_711f5a22](https://github.com/user-attachments/assets/ec69a8c9-8074-488f-b2e6-1f833be569b5)
-![WhatsApp Image 2025-07-06 at 13 06 13_22ac45e8](https://github.com/user-attachments/assets/1d7aed63-e0f6-43b0-ac0f-23654569d47c)
-![WhatsApp Image 2025-07-06 at 13 06 13_3c8fde9e](https://github.com/user-attachments/assets/c068efc3-cec1-4b09-b5e1-db00efbb54d6)
 
+## 📸 Screenshots
+
+<img src="https://github.com/user-attachments/assets/ec69a8c9-8074-488f-b2e6-1f833be569b5" width="300" />
+<img src="https://github.com/user-attachments/assets/1d7aed63-e0f6-43b0-ac0f-23654569d47c" width="300" />
+<img src="https://github.com/user-attachments/assets/c068efc3-cec1-4b09-b5e1-db00efbb54d6" width="300" />
 
 ---
 
