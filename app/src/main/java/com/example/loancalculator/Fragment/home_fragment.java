@@ -1,28 +1,31 @@
 package com.example.loancalculator.Fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
 import com.example.loancalculator.BaseLTV.LTVDB;
 import com.example.loancalculator.BaseLTV.LTVSettings;
 import com.example.loancalculator.BaseLTV.LTVSettingsDao;
-import com.example.loancalculator.Scheme;
-import com.example.loancalculator.SchemeDao;
-import com.example.loancalculator.SchemeDatabase;
-import com.example.loancalculator.purity.DBHelper;
 import com.example.loancalculator.R;
+import com.example.loancalculator.Scheme;
+import com.example.loancalculator.SchemeDatabase;
+import com.example.loancalculator.Utility.FirebaseSyncHelper;
+import com.example.loancalculator.Utility.animeffect;
+import com.example.loancalculator.purity.DBHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +37,9 @@ public class home_fragment extends Fragment {
     private DBHelper dbHelper;
     private LTVSettingsDao LTVSettingsDao;
     private float current75LtvPrice = 0f;
+    private List<TextView> purityButtons = new ArrayList<>();
 
-
-    public home_fragment() {
-        // Required empty public constructor
-    }
+    public home_fragment() {}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -47,32 +48,65 @@ public class home_fragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home_fragment, container, false);
 
         LTVSettingsDao = LTVDB.getInstance(requireContext()).ltvSettingsDao();
+        dbHelper = new DBHelper(requireContext());
+
         goldWeightEditText = root.findViewById(R.id.goldweight);
         stoneWeightEditText = root.findViewById(R.id.stoneweight);
         actualWeightTextView = root.findViewById(R.id.actualweight);
-
-        dbHelper = new DBHelper(requireContext());
-
-        // Purity Buttons
-        Button btn70 = root.findViewById(R.id.seventypersent);
-        Button btn75 = root.findViewById(R.id.seventyfive);
-        Button btn83 = root.findViewById(R.id.eightythreee);
-        Button btn87 = root.findViewById(R.id.eightyseven);
-        Button btn91 = root.findViewById(R.id.ninetyone);
-        Button btn99 = root.findViewById(R.id.ninetynine);
         btnBasePrice = root.findViewById(R.id.baseprice);
 
-        // Set Click Listeners to use dynamic DB values
-        btn70.setOnClickListener(v -> calculatePureGold("70%"));
-        btn75.setOnClickListener(v -> calculatePureGold("75%"));
-        btn83.setOnClickListener(v -> calculatePureGold("83%"));
-        btn87.setOnClickListener(v -> calculatePureGold("87%"));
-        btn91.setOnClickListener(v -> calculatePureGold("91%"));
-        btn99.setOnClickListener(v -> calculatePureGold("99%"));
+        // Purity buttons
+        TextView btn70 = root.findViewById(R.id.seventypersent);
+        TextView btn75 = root.findViewById(R.id.seventyfive);
+        TextView btn79 = root.findViewById(R.id.seventynine);
+        TextView btn83 = root.findViewById(R.id.eightythreee);
+        TextView btn87 = root.findViewById(R.id.eightyseven);
+        TextView btn91 = root.findViewById(R.id.ninetyone);
+        TextView btn99 = root.findViewById(R.id.ninetynine);
+
+        purityButtons.add(btn70);
+        purityButtons.add(btn75);
+        purityButtons.add(btn79);
+        purityButtons.add(btn83);
+        purityButtons.add(btn87);
+        purityButtons.add(btn91);
+        purityButtons.add(btn99);
+
+        for (TextView btn : purityButtons) {
+            btn.setBackgroundResource(R.drawable.bg_circle_purity);
+            btn.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+
+            btn.setOnClickListener(v -> {
+                highlightSelectedButton(btn);
+                calculatePureGold(convertKaratToPercentage(btn.getText().toString()));
+            });
+        }
 
         loadBaseLTV();
+        FirebaseSyncHelper.silentSyncSchemes(requireContext());
 
         return root;
+    }
+
+    private void highlightSelectedButton(TextView selectedButton) {
+        for (TextView btn : purityButtons) {
+            btn.setBackgroundResource(R.drawable.bg_circle_purity);
+            btn.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+        }
+
+        selectedButton.setBackgroundResource(R.drawable.bg_circle_selected);
+        selectedButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+    }
+
+    private void loadBaseLTV() {
+        new Thread(() -> {
+            LTVSettings settings = LTVSettingsDao.getBase75LTV();
+            if (settings != null) {
+                current75LtvPrice = settings.getBase75LTV();
+                requireActivity().runOnUiThread(() ->
+                        btnBasePrice.setText("Base LTV : " + (int) current75LtvPrice));
+            }
+        }).start();
     }
 
     private void showEligibleSchemes(double netWeight) {
@@ -89,18 +123,17 @@ public class home_fragment extends Fragment {
                     double originalLoanAmount = netWeight * scheme.getPrice();
                     double loanAmountToShow;
 
-                    // Apply logic
                     if (originalLoanAmount < scheme.getMinLimit()) {
-                        continue; // Skip if below min
+                        continue;
                     } else if (originalLoanAmount > scheme.getMaxLimit()) {
-                        loanAmountToShow = scheme.getMaxLimit(); // Cap to max
+                        loanAmountToShow = scheme.getMaxLimit();
                     } else {
                         loanAmountToShow = originalLoanAmount;
                     }
 
                     double monthlyInterest = (loanAmountToShow * scheme.getInterest()) / 100 / 12;
+                    float interestPerMonth = (float) (scheme.getInterest() / 12);
 
-                    // UI setup
                     foundAny = true;
                     View cardView = LayoutInflater.from(getContext()).inflate(R.layout.scheme_card, schemeContainer, false);
 
@@ -109,15 +142,16 @@ public class home_fragment extends Fragment {
                     TextView interestView = cardView.findViewById(R.id.tvMonthlyInterest);
                     TextView interestRateView = cardView.findViewById(R.id.tvInterestRate);
 
-                    Float intrestRatePerMonth = scheme.getInterest() / 12;
-
                     schemeNameView.setText(scheme.getName());
-                    loanAmountView.setText("Loan Amount: ₹" + (int) loanAmountToShow);
-                    interestView.setText("Monthly Interest: ₹" + (int) monthlyInterest);
-                    interestRateView.setText(String.format("%.2f%% Interest", intrestRatePerMonth));
 
+                    animeffect.animateLoanAmount(loanAmountView, (int) ((int) loanAmountToShow-(loanAmountToShow/2)), (int) loanAmountToShow);
+                    animeffect.animateMonthlyInterest(interestView, 0, monthlyInterest);
+                    animeffect.animateInterestRate(interestRateView, 0, interestPerMonth);
 
+                    Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up_fade_in);
+                    cardView.startAnimation(animation);
                     schemeContainer.addView(cardView);
+
                 }
 
                 if (!foundAny) {
@@ -130,28 +164,11 @@ public class home_fragment extends Fragment {
         }).start();
     }
 
-
-
-
-
-    private void loadBaseLTV() {
-        new Thread(() -> {
-            LTVSettings settings = LTVSettingsDao.getBase75LTV();
-            if (settings != null) {
-                current75LtvPrice = settings.getBase75LTV();
-                requireActivity().runOnUiThread(() ->
-                        btnBasePrice.setText("Base LTV : "+String.valueOf((int) current75LtvPrice)));
-            }
-        }).start();
-    }
-
     private void calculatePureGold(String purityLabel) {
         String goldWeightStr = goldWeightEditText.getText().toString().trim();
         String stoneWeightStr = stoneWeightEditText.getText().toString().trim();
 
-        if (stoneWeightStr.isEmpty()) {
-            stoneWeightStr = "0";
-        }
+        if (stoneWeightStr.isEmpty()) stoneWeightStr = "0";
 
         if (goldWeightStr.isEmpty()) {
             Toast.makeText(getContext(), "Please enter Gold weight", Toast.LENGTH_SHORT).show();
@@ -168,9 +185,8 @@ public class home_fragment extends Fragment {
                 return;
             }
 
-            // Get multiplier from DB using label
             double purityMultiplier = dbHelper.getMultiplierByLabel(purityLabel);
-            Log.e("findmulti", "Multiplier: " + purityMultiplier);
+            Log.e("findmulti", "Multiplier: " + purityMultiplier + " purity: " + purityLabel);
             double actualGold = (netWeight * purityMultiplier) / 100;
             actualWeightTextView.setText(String.format("Net Weight : %.2f g", actualGold));
 
@@ -179,5 +195,16 @@ public class home_fragment extends Fragment {
         } catch (NumberFormatException e) {
             Toast.makeText(getContext(), "Invalid number format", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private String convertKaratToPercentage(String karatText) {
+        if (karatText.contains("70")) return "70%";
+        else if (karatText.contains("75")) return "75%";
+        else if (karatText.contains("79")) return "79%";
+        else if (karatText.contains("83")) return "83%";
+        else if (karatText.contains("87")) return "87%";
+        else if (karatText.contains("91N")) return "91%";
+        else if (karatText.contains("91")) return "99%";
+        else return "0"; // fallback
     }
 }

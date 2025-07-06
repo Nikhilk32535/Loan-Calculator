@@ -9,4 +9,27 @@
     <color name="border_light">#757575</color>
 
 
+        <!-- Primary Brand Color -->
+        <color name="primaryGold">#C29800</color>         <!-- Elegant gold -->
+
+        <!-- Backgrounds -->
+        <color name="backgroundLight">#FAFAFA</color>     <!-- App background -->
+        <color name="cardWhite">#FFFFFF</color>           <!-- Cards & Inputs -->
+
+        <!-- Text Colors -->
+        <color name="textPrimary">#1A1A1A</color>         <!-- Main text -->
+        <color name="textSecondary">#7B7B7B</color>       <!-- Subtext or hints -->
+
+        <!-- Input Stroke / Outline -->
+        <color name="strokeGray">#DDDDDD</color>          <!-- Input box outline -->
+        <color name="strokeFocused">#C29800</color>       <!-- Input focus stroke -->
+
+        <!-- Accent Colors -->
+        <color name="accentGray">#F1F1F1</color>          <!-- Unselected circle bg -->
+        <color name="accentSelectedGold">#C29800</color>  <!-- Selected circle bg -->
+        <color name="iconGray">#5C5C5C</color>            <!-- Icon tint -->
+
+        <!-- Optional Shadow / Divider -->
+        <color name="dividerLight">#EEEEEE</color>
+
 </resources>

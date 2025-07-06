@@ -88,6 +88,14 @@
                 android:text="tvInterestMonthly"/>
 
         </GridLayout>
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#E0E0E0" />
+
     </LinearLayout>
 
 </FrameLayout>

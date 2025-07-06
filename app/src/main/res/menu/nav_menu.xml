@@ -3,27 +3,41 @@
     <item
         android:id="@+id/nav_home"
         android:title="Home"
-        android:icon="@drawable/ic_purity" />
+        android:icon="@drawable/ic_weight" />
+
+    <item
+        android:id="@+id/nav_scheme"
+        android:title="Schemes"
+        android:icon="@drawable/schemes_chart" />
+
+    <item
+        android:id="@+id/set_purity"
+        android:title="Set Purity"
+        android:icon="@drawable/edit_icon" />
 
     <item
         android:id="@+id/nav_authenticate"
         android:title="Authenticate"
         android:icon="@drawable/ic_lock" />
 
-    <group android:id="@+id/settings_group" android:visible="false">
-        <item
-            android:id="@+id/set_purity"
-            android:title="Set Purity"
-            android:icon="@drawable/baseline_edit_24" />
+    <group android:id="@+id/settings_group"
+        android:visible="false">
+
         <item
             android:id="@+id/set_scheme"
             android:title="Set Scheme"
-            android:icon="@drawable/baseline_edit_24" />
+            android:icon="@drawable/edit_icon" />
     </group>
 
     <item
         android:id="@+id/nav_manual"
         android:title="User Manual"
         android:icon="@drawable/about_us" />
+
+    <item
+        android:id="@+id/nav_share"
+        android:title="Share App"
+        android:icon="@drawable/ic_share" />
+
 
 </menu>

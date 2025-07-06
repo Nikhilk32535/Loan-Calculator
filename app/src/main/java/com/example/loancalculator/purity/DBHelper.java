@@ -10,12 +10,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "goldLoan.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_NAME = "purity_multipliers";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_PURITY_70 = "purity_70";
     private static final String COLUMN_PURITY_75 = "purity_75";
+    private static final String COLUMN_PURITY_79 = "purity_79";
     private static final String COLUMN_PURITY_83 = "purity_83";
     private static final String COLUMN_PURITY_87 = "purity_87";
     private static final String COLUMN_PURITY_91 = "purity_91";
@@ -25,6 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_ID + " INTEGER PRIMARY KEY, " +
             COLUMN_PURITY_70 + " REAL, " +
             COLUMN_PURITY_75 + " REAL, " +
+            COLUMN_PURITY_79 + " REAL, " +
             COLUMN_PURITY_83 + " REAL, " +
             COLUMN_PURITY_87 + " REAL, " +
             COLUMN_PURITY_91 + " REAL, " +
@@ -43,6 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ID, 1);
         values.put(COLUMN_PURITY_70, 75);
         values.put(COLUMN_PURITY_75, 80);
+        values.put(COLUMN_PURITY_79, 85);
         values.put(COLUMN_PURITY_83, 90);
         values.put(COLUMN_PURITY_87, 94);
         values.put(COLUMN_PURITY_91, 97);
@@ -56,22 +59,20 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Save or update the one and only row
-    public boolean savePurityMultipliers(String purity70, String purity75, String purity83,
+    public boolean savePurityMultipliers(String purity70, String purity75, String purity79, String purity83,
                                          String purity87, String purity91, String purity99) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PURITY_70, purity70);
         values.put(COLUMN_PURITY_75, purity75);
+        values.put(COLUMN_PURITY_79, purity79);
         values.put(COLUMN_PURITY_83, purity83);
         values.put(COLUMN_PURITY_87, purity87);
         values.put(COLUMN_PURITY_91, purity91);
         values.put(COLUMN_PURITY_99, purity99);
 
-        // Try to update the row with ID = 1
         int rowsUpdated = db.update(TABLE_NAME, values, COLUMN_ID + " = ?", new String[]{"1"});
 
-        // If no row was updated, insert it (should not normally happen)
         if (rowsUpdated == 0) {
             values.put(COLUMN_ID, 1);
             long insertResult = db.insert(TABLE_NAME, null, values);
@@ -83,7 +84,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    // Fetch multiplier by label
     @SuppressLint("Range")
     public double getMultiplierByLabel(String label) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -97,6 +97,9 @@ public class DBHelper extends SQLiteOpenHelper {
                     break;
                 case "75%":
                     multiplier = cursor.getDouble(cursor.getColumnIndex(COLUMN_PURITY_75));
+                    break;
+                case "79%":
+                    multiplier = cursor.getDouble(cursor.getColumnIndex(COLUMN_PURITY_79));
                     break;
                 case "83%":
                     multiplier = cursor.getDouble(cursor.getColumnIndex(COLUMN_PURITY_83));

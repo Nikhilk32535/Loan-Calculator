@@ -6,262 +6,296 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
-
-        <TextView
-            android:id="@+id/purityheader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Purity Chart Upadation"
-            android:textColor="@color/text_red"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:padding="10dp"
-            android:background="@drawable/round_corner_foucused"
-            android:backgroundTint="@color/gold_yellow"/>
-
-        <!-- Row 1: 70% -->
-        <LinearLayout
-            android:id="@+id/row70"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_below="@+id/purityheader"
-            android:orientation="horizontal">
+            android:padding="5dp">
 
+            <!-- Header -->
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/purityheader"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="70%"
+                android:text="Purity Chart Updation"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:gravity="center"
-                android:padding="8dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/round_corner_foucused"
-                android:backgroundTint="@color/gold_yellow" />
+                android:layout_centerHorizontal="true"
+                android:padding="12dp"
+                android:background="@drawable/rounded_yellow_button" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayout70"
-                android:layout_width="0dp"
+            <!-- Purity Rows -->
+            <!-- Template used for all -->
+            <!-- 70% -->
+            <LinearLayout
+                android:id="@+id/row70"
+                android:layout_below="@id/purityheader"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:boxStrokeColor="#FFD700"
-                app:boxBackgroundMode="outline">
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit70"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                    android:layout_weight="1"
+                    android:text="70%"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_yellow_button"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
 
-        <!-- Row 2: 75% -->
-        <LinearLayout
-            android:id="@+id/row75"
-            android:layout_below="@id/row70"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="75%"
-                android:gravity="center"
-                android:layout_marginEnd="20dp"
-                android:padding="8dp"
-                android:background="@drawable/round_corner_foucused"
-                android:backgroundTint="@color/gold_yellow" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayout75"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:boxStrokeColor="#FFD700"
-                app:boxBackgroundMode="outline">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit75"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayout70"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxStrokeColor="#FFD700"
+                    app:boxBackgroundMode="outline">
 
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit70"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
-        <!-- Row 3: 83% -->
-        <LinearLayout
-            android:id="@+id/row83"
-            android:layout_below="@id/row75"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
+            <!-- Repeat below for all values -->
+            <!-- 75% -->
+            <LinearLayout
+                android:id="@+id/row75"
+                android:layout_below="@id/row70"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="83%"
-                android:gravity="center"
-                android:layout_marginEnd="20dp"
-                android:padding="8dp"
-                android:background="@drawable/round_corner_foucused"
-                android:backgroundTint="@color/gold_yellow" />
+                android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayout83"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:boxStrokeColor="#FFD700"
-                app:boxBackgroundMode="outline">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit83"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="75%"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_yellow_button"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
 
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <!-- Row 4: 87% -->
-        <LinearLayout
-            android:id="@+id/row87"
-            android:layout_below="@id/row83"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="87%"
-                android:layout_marginEnd="20dp"
-                android:gravity="center"
-                android:padding="8dp"
-                android:background="@drawable/round_corner_foucused"
-                android:backgroundTint="@color/gold_yellow" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayout87"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:boxStrokeColor="#FFD700"
-                app:boxBackgroundMode="outline">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit87"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayout75"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxStrokeColor="#FFD700"
+                    app:boxBackgroundMode="outline">
 
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit75"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
-        <!-- Row 5: 91% -->
-        <LinearLayout
-            android:id="@+id/row91"
-            android:layout_below="@id/row87"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
+            <!-- 79% -->
+            <LinearLayout
+                android:id="@+id/row79"
+                android:layout_below="@id/row75"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="91%"
-                android:gravity="center"
-                android:layout_marginEnd="20dp"
-                android:padding="8dp"
-                android:background="@drawable/round_corner_foucused"
-                android:backgroundTint="@color/gold_yellow" />
+                android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayout91"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:boxStrokeColor="#FFD700"
-                app:boxBackgroundMode="outline">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit91"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="79%"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_yellow_button"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
 
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <!-- Row 6: 99% -->
-        <LinearLayout
-            android:id="@+id/row99"
-            android:layout_below="@id/row91"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="99%"
-                android:gravity="center"
-                android:layout_marginEnd="20dp"
-                android:padding="8dp"
-                android:background="@drawable/round_corner_foucused"
-                android:backgroundTint="@color/gold_yellow" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayout99"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:boxStrokeColor="#FFD700"
-                app:boxBackgroundMode="outline">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit99"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayout79"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxStrokeColor="#FFD700"
+                    app:boxBackgroundMode="outline">
 
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit79"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
-        <!-- Save Button -->
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_below="@id/row99"
-            android:layout_marginTop="24dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:textColor="@android:color/black"
-            android:backgroundTint="#FFD700" />
+            <!-- 83% -->
+            <LinearLayout
+                android:id="@+id/row83"
+                android:layout_below="@id/row79"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="83%"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_yellow_button"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayout83"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxStrokeColor="#FFD700"
+                    app:boxBackgroundMode="outline">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit83"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- 87% -->
+            <LinearLayout
+                android:id="@+id/row87"
+                android:layout_below="@id/row83"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="87%"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_yellow_button"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayout87"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxStrokeColor="#FFD700"
+                    app:boxBackgroundMode="outline">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit87"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- 91% -->
+            <LinearLayout
+                android:id="@+id/row91"
+                android:layout_below="@id/row87"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="91%"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_yellow_button"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayout91"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxStrokeColor="#FFD700"
+                    app:boxBackgroundMode="outline">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit91"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- 99% -->
+            <LinearLayout
+                android:id="@+id/row99"
+                android:layout_below="@id/row91"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="99%"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_yellow_button"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayout99"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxStrokeColor="#FFD700"
+                    app:boxBackgroundMode="outline">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit99"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- Save Button -->
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_below="@id/row99"
+                android:layout_marginTop="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:backgroundTint="@color/gold_yellow"
+                android:padding="12dp" />
+        </RelativeLayout>
 
     </LinearLayout>
-
 </ScrollView>

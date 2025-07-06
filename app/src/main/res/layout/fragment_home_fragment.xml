@@ -5,187 +5,153 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="@color/backgroundLight"
     tools:context=".Fragment.home_fragment">
 
-   <!-- Top section (Inputs, Buttons, Net weight, Base price) -->
+   <!-- Input Fields -->
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:orientation="vertical">
 
-      <!-- Weight Input -->
-      <LinearLayout
+      <com.google.android.material.textfield.TextInputLayout
+          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          android:layout_marginTop="16dp"
-          android:gravity="center"
-          android:weightSum="2">
+          android:layout_marginBottom="12dp"
+          android:hint="Gross Weight (g)"
+          app:boxStrokeColor="@color/gold_yellow"
+          app:cursorColor="@color/gold_yellow"
+          app:hintTextColor="@color/gold_yellow"
+          app:boxBackgroundMode="outline">
 
-         <com.google.android.material.textfield.TextInputLayout
-             android:layout_width="0dp"
+         <com.google.android.material.textfield.TextInputEditText
+             android:id="@+id/goldweight"
+             android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:layout_marginEnd="8dp"
-             android:hint="Enter Weight(G)"
-             app:boxBackgroundMode="outline"
-             android:elevation="8dp"
-             app:boxStrokeColor="@color/gold_yellow"
-             app:hintTextColor="@color/gold_yellow"
-             app:cursorColor="@color/gold_yellow"
-             app:boxCornerRadiusTopStart="12dp"
-             app:boxCornerRadiusBottomStart="12dp">
+             android:inputType="numberDecimal"
+             android:textColor="@color/textPrimary"/>
+      </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/goldweight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:textColor="@color/text_grey"/>
-         </com.google.android.material.textfield.TextInputLayout>
-
-         <com.google.android.material.textfield.TextInputLayout
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:layout_marginStart="8dp"
-             android:hint="Stone Weight(G)"
-             app:boxBackgroundMode="outline"
-             app:boxStrokeColor="@color/gold_yellow"
-             app:hintTextColor="@color/gold_yellow"
-             app:cursorColor="@color/gold_yellow"
-             app:boxCornerRadiusTopEnd="12dp"
-             app:boxCornerRadiusBottomEnd="12dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/stoneweight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:textColor="@color/text_grey"/>
-         </com.google.android.material.textfield.TextInputLayout>
-      </LinearLayout>
-
-      <!-- Purity Buttons Grid -->
-      <GridLayout
-          android:id="@+id/puritybox"
+      <com.google.android.material.textfield.TextInputLayout
+          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:columnCount="3"
-          android:alignmentMode="alignMargins"
-          android:rowOrderPreserved="false"
-          android:layout_marginTop="24dp"
-          android:columnOrderPreserved="false">
+          android:hint="Stone Weight (g)"
+          app:boxStrokeColor="@color/gold_yellow"
+          app:cursorColor="@color/gold_yellow"
+          app:hintTextColor="@color/gold_yellow"
+          app:boxBackgroundMode="outline">
 
-         <Button
-             android:id="@+id/seventypersent"
-             android:layout_width="0dp"
+         <com.google.android.material.textfield.TextInputEditText
+             android:id="@+id/stoneweight"
+             android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:layout_columnWeight="1"
-             android:text="70%"
-             android:textColor="@color/text_red"
-             android:backgroundTint="@color/gold_yellow"
-             android:layout_margin="4dp"/>
-
-         <Button
-             android:id="@+id/seventyfive"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_columnWeight="1"
-             android:text="75%"
-             android:textColor="@color/text_red"
-             android:backgroundTint="@color/gold_yellow"
-             android:layout_margin="4dp"/>
-
-         <Button
-             android:id="@+id/eightythreee"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_columnWeight="1"
-             android:text="83%"
-             android:textColor="@color/text_red"
-             android:backgroundTint="@color/gold_yellow"
-             android:layout_margin="4dp"/>
-
-         <Button
-             android:id="@+id/eightyseven"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_columnWeight="1"
-             android:text="87%"
-             android:textColor="@color/text_red"
-             android:backgroundTint="@color/gold_yellow"
-             android:layout_margin="4dp"/>
-
-         <Button
-             android:id="@+id/ninetyone"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_columnWeight="1"
-             android:text="91%"
-             android:textColor="@color/text_red"
-             android:backgroundTint="@color/gold_yellow"
-             android:layout_margin="4dp"/>
-
-         <Button
-             android:id="@+id/ninetynine"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_columnWeight="1"
-             android:text="99%"
-             android:textColor="@color/text_red"
-             android:backgroundTint="@color/gold_yellow"
-             android:layout_margin="4dp"/>
-      </GridLayout>
-
-      <!-- Net Weight and Base Price -->
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="center">
-
-         <TextView
-             android:id="@+id/actualweight"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:padding="10dp"
-             android:layout_margin="5dp"
-             android:text="Net Weight"
-             android:gravity="center"
-             android:textColor="@color/text_red"
-             android:textSize="16sp"
-             android:background="@drawable/round_corner_foucused"
-             android:backgroundTint="@color/gold_yellow" />
-
-         <TextView
-             android:id="@+id/baseprice"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:padding="10dp"
-             android:layout_margin="5dp"
-             android:text="Base price"
-             android:gravity="center"
-             android:textColor="@color/text_red"
-             android:textSize="16sp"
-             android:background="@drawable/round_corner_foucused"
-             android:backgroundTint="@color/gold_yellow" />
-      </LinearLayout>
+             android:inputType="numberDecimal"
+             android:textColor="@color/textPrimary"/>
+      </com.google.android.material.textfield.TextInputLayout>
    </LinearLayout>
 
-   <!-- Only SchemeContainer Scrollable -->
+   <!-- Karat Selection -->
+   <HorizontalScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="16dp"
+       android:scrollbars="horizontal"
+       android:scrollbarThumbHorizontal="@color/gold_yellow"
+       android:fillViewport="true">
+
+      <LinearLayout
+          android:id="@+id/puritybox"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:gravity="center_horizontal"
+          android:paddingHorizontal="8dp">
+
+         <TextView
+             android:id="@+id/seventypersent"
+             style="@style/PurityButtonStyle"
+             android:text="70" />
+
+         <TextView
+             android:id="@+id/seventyfive"
+             style="@style/PurityButtonStyle"
+             android:text="75" />
+
+         <TextView
+             android:id="@+id/seventynine"
+             style="@style/PurityButtonStyle"
+             android:text="79" />
+
+         <TextView
+             android:id="@+id/eightythreee"
+             style="@style/PurityButtonStyle"
+             android:text="83" />
+
+         <TextView
+             android:id="@+id/eightyseven"
+             style="@style/PurityButtonStyle"
+             android:text="87" />
+
+         <TextView
+             android:id="@+id/ninetyone"
+             style="@style/PurityButtonStyle"
+             android:text="91N"
+             />
+
+         <TextView
+             android:id="@+id/ninetynine"
+             style="@style/PurityButtonStyle"
+             android:text="91" />
+      </LinearLayout>
+   </HorizontalScrollView>
+
+   <!-- Net Weight & Base LTV -->
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:gravity="center"
+       android:layout_marginTop="16dp"
+       android:weightSum="2">
+
+      <TextView
+          android:id="@+id/actualweight"
+          style="@style/CardBoxStyle"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="match_parent"
+          android:text="Net Weight: 0g"
+          android:drawableLeft="@drawable/ic_weight"
+          android:drawablePadding="6dp"
+          android:gravity="center_vertical"/>
+
+      <TextView
+          android:id="@+id/baseprice"
+          style="@style/CardBoxStyle"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:text="Base LTV: ₹ 0"
+          android:drawableLeft="@drawable/ic_rupee"
+          android:drawablePadding="6dp"
+          android:gravity="center_vertical"/>
+   </LinearLayout>
+
+   <!-- ScrollView for Loan Schemes -->
    <ScrollView
        android:layout_width="match_parent"
        android:layout_height="0dp"
        android:layout_weight="1"
        android:fillViewport="true"
-       android:scrollbars="vertical">
+       android:layout_marginTop="16dp">
 
       <LinearLayout
           android:id="@+id/schemeContainer"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="vertical"
-          android:padding="8dp" />
+          />
    </ScrollView>
-
 </LinearLayout>

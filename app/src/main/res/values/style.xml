@@ -14,4 +14,52 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+
+
+    <style name="PurityButtonStyle">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:background">@drawable/bg_circle_purity</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+
+
+    <style name="CardBoxStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@color/cardWhite</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:backgroundTint">@color/cardWhite</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="KaratButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/bg_circle_purity</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingHorizontal">16dp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:backgroundTint">@color/gold_yellow</item>
+    </style>
+
+
 </resources>
+
+

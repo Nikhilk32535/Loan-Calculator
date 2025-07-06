@@ -56,7 +56,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update Purity Rates:"
+            android:text="Update Purity %:"
             android:textColor="@color/text_red"
             android:textSize="22sp"
             />
@@ -64,24 +64,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update the Purity Rates by tapping the 'Set Purity' button From Navigation."
+            android:text="Update the Purity % by tapping the 'Set Purity' button From Navigation."
             android:layout_marginBottom="12dp"
             android:textSize="18sp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add/Edit Schemes:"
-            android:textColor="@color/text_red"
-            android:textSize="22sp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go to 'Manage Schemes' to add or edit loan offers based on latest market prices."
-            android:layout_marginBottom="32dp"
-            android:textSize="18sp"/>
 
         <Button
             android:id="@+id/startButton"
