@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setFrameLayout(new home_fragment());
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
         navigationView.setItemTextColor(new ColorStateList(
                 new int[][] {
                         new int[] { android.R.attr.state_checked },
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 },
                 new int[] {
                         ContextCompat.getColor(this, R.color.gold_yellow), // selected icon color
-                        ContextCompat.getColor(this, R.color.black)        // default icon color
+                        ContextCompat.getColor(this, R.color.iconGray)        // default icon color
                 }
         ));
 
