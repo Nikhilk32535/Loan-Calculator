@@ -8,6 +8,8 @@
     <color name="text_grey">#757575</color>
     <color name="border_light">#757575</color>
 
+    <color name="light_gold">#FFF8DC</color>   <!-- background -->
+    <color name="rich_gold">#FFC107</color>    <!-- stroke or accent -->
 
         <!-- Primary Brand Color -->
         <color name="primaryGold">#C29800</color>         <!-- Elegant gold -->

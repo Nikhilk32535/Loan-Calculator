@@ -23,6 +23,7 @@
             android:background="@color/gold_yellow"
             app:title="Gold Loan Calculator"
             app:titleTextColor="@color/text_red"
+            app:menu="@menu/top_app_bar_menu"
             app:navigationIcon="@drawable/navigation_view" />
 
         <FrameLayout

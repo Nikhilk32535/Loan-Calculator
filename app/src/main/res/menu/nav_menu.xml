@@ -6,6 +6,10 @@
         android:icon="@drawable/ic_weight" />
 
     <item
+        android:id="@+id/nav_goldtoloan"
+        android:title="Gold To Loan"
+        android:icon="@drawable/ic_weight" />
+    <item
         android:id="@+id/nav_scheme"
         android:title="Schemes"
         android:icon="@drawable/schemes_chart" />

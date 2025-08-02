@@ -1,7 +1,6 @@
 package com.example.loancalculator.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,7 @@ import com.example.loancalculator.purity.DBHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class home_fragment extends Fragment {
+public class goldtoloancalculation extends Fragment {
 
     private EditText goldWeightEditText, stoneWeightEditText, existingLoanEditText;
     private TextView actualWeightTextView, btnBasePrice;
@@ -38,11 +37,11 @@ public class home_fragment extends Fragment {
     private float baseLtvPrice = 0f;
     private final List<TextView> purityButtons = new ArrayList<>();
 
-    public home_fragment() {}
+    public goldtoloancalculation() {}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_home_fragment, container, false);
+        View root = inflater.inflate(R.layout.fragmentgoldtoloancalculation, container, false);
 
         ltvSettingsDao = LTVDB.getInstance(requireContext()).ltvSettingsDao();
         dbHelper = new DBHelper(requireContext());

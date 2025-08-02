@@ -3,7 +3,6 @@ package com.example.loancalculator.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -24,9 +23,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.loancalculator.Fragment.HomeFragment;
 import com.example.loancalculator.Fragment.SchemeView;
 import com.example.loancalculator.Fragment.addscheme;
-import com.example.loancalculator.Fragment.home_fragment;
+import com.example.loancalculator.Fragment.goldtoloancalculation;
 import com.example.loancalculator.Fragment.user_manual;
 import com.example.loancalculator.R;
 import com.example.loancalculator.purity.set_purity;
@@ -34,8 +34,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity {
     String ltvpass;
@@ -55,7 +53,18 @@ public class MainActivity extends AppCompatActivity {
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.gold_yellow));
         }
 
-        setFrameLayout(new home_fragment());
+        topAppBar = findViewById(R.id.topAppBar);
+        topAppBar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_help) {
+                setFrameLayout(new user_manual());
+                return true;
+            }
+            return false;
+        });
+
+        // Start With Default
+        setFrameLayout(new HomeFragment());
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
 
@@ -112,10 +121,12 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.nav_home) {
-                    setFrameLayout(new home_fragment());
+                    setFrameLayout(new HomeFragment());
                 } else if (id == R.id.set_purity) {
                     setFrameLayout(new set_purity());
-                } else if (id == R.id.nav_scheme) {
+                } else if (id == R.id.nav_goldtoloan) {
+                    setFrameLayout(new goldtoloancalculation());
+                }else if (id == R.id.nav_scheme) {
                     setFrameLayout(new SchemeView());
                 } else if (id == R.id.set_scheme) {
                     setFrameLayout(new addscheme());
@@ -214,8 +225,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
-        if (!(currentFragment instanceof home_fragment)) {
-            setFrameLayout(new home_fragment());
+        if (!(currentFragment instanceof goldtoloancalculation)) {
+            setFrameLayout(new goldtoloancalculation());
         } else {
             super.onBackPressed();
         }
