@@ -4,6 +4,9 @@ import android.animation.ValueAnimator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class animeffect {
 
     public static void animateLoanAmount(TextView textView, int start, int end) {
@@ -31,6 +34,17 @@ public class animeffect {
 
         animator.start();
     }
+
+    public static void animateExistingLoan(TextView textView, int from, int to) {
+        ValueAnimator animator = ValueAnimator.ofInt(from, to);
+        animator.setDuration(800); // milliseconds
+        animator.addUpdateListener(animation -> {
+            int value = (int) animation.getAnimatedValue();
+            textView.setText("Eligible Extra: ₹" + String.format("%,d", value));
+        });
+        animator.start();
+    }
+
 
     public static void animateInterestRate(TextView textView, double start, double end) {
         ValueAnimator animator = ValueAnimator.ofFloat((float) start, (float) end);

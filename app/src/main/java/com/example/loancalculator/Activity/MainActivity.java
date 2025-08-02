@@ -1,4 +1,4 @@
-package com.example.loancalculator.Activity;  // Change this to your actual package name
+package com.example.loancalculator.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -20,7 +19,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -37,11 +35,6 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,11 +45,10 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     FrameLayout frameLayout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);  // your XML layout file
+        setContentView(R.layout.activity_main);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -68,30 +60,29 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
 
         navigationView.setItemTextColor(new ColorStateList(
-                new int[][] {
-                        new int[] { android.R.attr.state_checked },
-                        new int[] {} // default
+                new int[][]{
+                        new int[]{android.R.attr.state_checked},
+                        new int[]{}
                 },
-                new int[] {
+                new int[]{
                         ContextCompat.getColor(this, R.color.text_red),
                         ContextCompat.getColor(this, R.color.text_grey)
                 }
         ));
 
         navigationView.setItemIconTintList(new ColorStateList(
-                new int[][] {
-                        new int[] { android.R.attr.state_checked },
-                        new int[] {} // default
+                new int[][]{
+                        new int[]{android.R.attr.state_checked},
+                        new int[]{}
                 },
-                new int[] {
-                        ContextCompat.getColor(this, R.color.gold_yellow), // selected icon color
-                        ContextCompat.getColor(this, R.color.iconGray)        // default icon color
+                new int[]{
+                        ContextCompat.getColor(this, R.color.gold_yellow),
+                        ContextCompat.getColor(this, R.color.iconGray)
                 }
         ));
 
         topAppBar = findViewById(R.id.topAppBar);
 
-        // Setup ActionBarDrawerToggle
         toggle = new ActionBarDrawerToggle(
                 this,
                 drawerLayout,
@@ -103,15 +94,12 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Optional: Handle NavigationView item clicks
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                // Clear previous selection
                 for (int i = 0; i < navigationView.getMenu().size(); i++) {
                     MenuItem menuItem = navigationView.getMenu().getItem(i);
                     menuItem.setChecked(false);
-                    // Also clear group items (like settings_group)
                     if (menuItem.hasSubMenu()) {
                         for (int j = 0; j < menuItem.getSubMenu().size(); j++) {
                             menuItem.getSubMenu().getItem(j).setChecked(false);
@@ -119,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                // Set current selection
                 item.setChecked(true);
 
                 int id = item.getItemId();
@@ -137,27 +124,24 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_authenticate) {
                     showAuthDialog();
                     return true;
-                }else if (id == R.id.nav_share) {
-                    shareAppFromFirebase();  // Show both options
+                } else if (id == R.id.nav_share) {
+                    shareAppFromFirebase();
                     return true;
                 }
-
 
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
-
-
     }
-    public void setFrameLayout(Fragment fragment){
+
+    public void setFrameLayout(Fragment fragment) {
         frameLayout = findViewById(R.id.main_container);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_container, fragment).commit();
     }
 
     private void showAuthDialog() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Authentication");
 
@@ -169,13 +153,11 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Verify", (dialog, which) -> {
             String enteredPassword = input.getText().toString().trim();
             fetchBaseLTV(this, ltvPrice -> {
-                // Now you can use ltvPrice (as String)
-                Toast.makeText(this, "LTV "+ltvPrice, Toast.LENGTH_SHORT).show();
-                ltvpass=ltvPrice;
+                Toast.makeText(this, "LTV " + ltvPrice, Toast.LENGTH_SHORT).show();
+                ltvpass = ltvPrice;
             });
 
             if (enteredPassword.equals("1")) {
-                // Show the settings group
                 NavigationView navView = findViewById(R.id.nav_view);
                 Menu menu = navView.getMenu();
                 menu.setGroupVisible(R.id.settings_group, true);
@@ -186,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-
         builder.show();
     }
 
@@ -206,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
     public interface OnLtvFetchedListener {
         void onFetched(String ltvPrice);
     }
-
 
     private void shareAppFromFirebase() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("AppDownloadLink");
@@ -231,5 +211,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(intent, "Share App via"));
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+        if (!(currentFragment instanceof home_fragment)) {
+            setFrameLayout(new home_fragment());
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
