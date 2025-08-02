@@ -1,177 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     android:background="@color/backgroundLight"
+    android:padding="10dp"
     tools:context=".Fragment.home_fragment">
 
-   <!-- Input Fields -->
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical">
-
-      <com.google.android.material.textfield.TextInputLayout
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="12dp"
-          android:hint="Gross Weight (g)"
-          app:boxStrokeColor="@color/gold_yellow"
-          app:cursorColor="@color/gold_yellow"
-          app:hintTextColor="@color/gold_yellow"
-          app:boxBackgroundMode="outline">
-
-         <com.google.android.material.textfield.TextInputEditText
-             android:id="@+id/goldweight"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:inputType="numberDecimal"
-             android:textColor="@color/textPrimary"/>
-      </com.google.android.material.textfield.TextInputLayout>
-
-      <com.google.android.material.textfield.TextInputLayout
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="Stone Weight (g)"
-          app:boxStrokeColor="@color/gold_yellow"
-          app:cursorColor="@color/gold_yellow"
-          app:hintTextColor="@color/gold_yellow"
-          app:boxBackgroundMode="outline">
-
-         <com.google.android.material.textfield.TextInputEditText
-             android:id="@+id/stoneweight"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:inputType="numberDecimal"
-             android:textColor="@color/textPrimary"/>
-      </com.google.android.material.textfield.TextInputLayout>
-
-      <com.google.android.material.textfield.TextInputLayout
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="12dp"
-          android:hint="Existing Loan (₹)"
-          app:boxStrokeColor="@color/gold_yellow"
-          app:cursorColor="@color/gold_yellow"
-          app:hintTextColor="@color/gold_yellow"
-          app:boxBackgroundMode="outline">
-
-         <com.google.android.material.textfield.TextInputEditText
-             android:id="@+id/et_existing_loan"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:inputType="numberDecimal"
-             android:textColor="@color/textPrimary" />
-      </com.google.android.material.textfield.TextInputLayout>
-
-   </LinearLayout>
-
-   <!-- Karat Selection -->
-   <HorizontalScrollView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="16dp"
-       android:scrollbars="horizontal"
-       android:scrollbarThumbHorizontal="@color/gold_yellow"
-       android:fillViewport="true">
-
-      <LinearLayout
-          android:id="@+id/puritybox"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          android:gravity="center_horizontal"
-          android:paddingHorizontal="8dp">
-
-         <TextView
-             android:id="@+id/seventypersent"
-             style="@style/PurityButtonStyle"
-             android:text="70" />
-
-         <TextView
-             android:id="@+id/seventyfive"
-             style="@style/PurityButtonStyle"
-             android:text="75" />
-
-         <TextView
-             android:id="@+id/seventynine"
-             style="@style/PurityButtonStyle"
-             android:text="79" />
-
-         <TextView
-             android:id="@+id/eightythreee"
-             style="@style/PurityButtonStyle"
-             android:text="83" />
-
-         <TextView
-             android:id="@+id/eightyseven"
-             style="@style/PurityButtonStyle"
-             android:text="87" />
-
-         <TextView
-             android:id="@+id/ninetyone"
-             style="@style/PurityButtonStyle"
-             android:text="91N"
-             />
-
-         <TextView
-             android:id="@+id/ninetynine"
-             style="@style/PurityButtonStyle"
-             android:text="91" />
-      </LinearLayout>
-   </HorizontalScrollView>
-
-   <!-- Net Weight & Base LTV -->
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       android:gravity="center"
-       android:layout_marginTop="16dp"
-       android:weightSum="2">
-
-      <TextView
-          android:id="@+id/actualweight"
-          style="@style/CardBoxStyle"
-          android:layout_width="0dp"
-          android:layout_weight="1"
-          android:layout_height="match_parent"
-          android:text="Net Weight: 0g"
-          android:drawableLeft="@drawable/ic_weight"
-          android:drawablePadding="6dp"
-          android:gravity="center_vertical"/>
-
-      <TextView
-          android:id="@+id/baseprice"
-          style="@style/CardBoxStyle"
-          android:layout_width="0dp"
-          android:layout_weight="1"
-          android:layout_height="wrap_content"
-          android:text="Base LTV: ₹ 0"
-          android:drawableLeft="@drawable/ic_rupee"
-          android:drawablePadding="6dp"
-          android:gravity="center_vertical"/>
-   </LinearLayout>
-
-   <!-- ScrollView for Loan Schemes -->
+   <!-- Single ScrollView for all scrollable content -->
    <ScrollView
        android:layout_width="match_parent"
        android:layout_height="0dp"
        android:layout_weight="1"
-       android:fillViewport="true"
-       android:layout_marginTop="16dp">
+       android:scrollbars="none"
+       android:fillViewport="true">
 
       <LinearLayout
-          android:id="@+id/schemeContainer"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          />
+          android:orientation="vertical">
+
+         <!-- Input Fields -->
+         <com.google.android.material.textfield.TextInputLayout
+             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="12dp"
+             android:hint="Gross Weight (g)"
+             app:boxStrokeColor="@color/gold_yellow"
+             app:cursorColor="@color/gold_yellow"
+             app:hintTextColor="@color/gold_yellow"
+             app:boxBackgroundMode="outline">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/goldweight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="@color/textPrimary" />
+         </com.google.android.material.textfield.TextInputLayout>
+
+         <com.google.android.material.textfield.TextInputLayout
+             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:hint="Stone Weight (g)"
+             app:boxStrokeColor="@color/gold_yellow"
+             app:cursorColor="@color/gold_yellow"
+             app:hintTextColor="@color/gold_yellow"
+             app:boxBackgroundMode="outline">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/stoneweight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="@color/textPrimary" />
+         </com.google.android.material.textfield.TextInputLayout>
+
+         <com.google.android.material.textfield.TextInputLayout
+             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="12dp"
+             android:hint="Existing Loan (₹)"
+             app:boxStrokeColor="@color/gold_yellow"
+             app:cursorColor="@color/gold_yellow"
+             app:hintTextColor="@color/gold_yellow"
+             app:boxBackgroundMode="outline">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_existing_loan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="@color/textPrimary" />
+         </com.google.android.material.textfield.TextInputLayout>
+
+         <!-- Karat Selection -->
+         <HorizontalScrollView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="16dp"
+             android:scrollbars="horizontal"
+             android:scrollbarThumbHorizontal="@color/gold_yellow"
+             android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/puritybox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:paddingHorizontal="8dp">
+
+               <TextView android:id="@+id/seventypersent" style="@style/PurityButtonStyle" android:text="70" />
+               <TextView android:id="@+id/seventyfive" style="@style/PurityButtonStyle" android:text="75" />
+               <TextView android:id="@+id/seventynine" style="@style/PurityButtonStyle" android:text="79" />
+               <TextView android:id="@+id/eightythreee" style="@style/PurityButtonStyle" android:text="83" />
+               <TextView android:id="@+id/eightyseven" style="@style/PurityButtonStyle" android:text="87" />
+               <TextView android:id="@+id/ninetyone" style="@style/PurityButtonStyle" android:text="91N" />
+               <TextView android:id="@+id/ninetynine" style="@style/PurityButtonStyle" android:text="91" />
+            </LinearLayout>
+         </HorizontalScrollView>
+
+         <!-- Fixed Bottom Section (Always visible) -->
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:gravity="center"
+             android:layout_marginTop="12dp"
+             android:weightSum="2">
+
+            <TextView
+                android:id="@+id/actualweight"
+                style="@style/CardBoxStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Net Weight: 0g"
+                android:drawableLeft="@drawable/ic_weight"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/baseprice"
+                style="@style/CardBoxStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Base LTV: ₹ 0"
+                android:drawableLeft="@drawable/ic_rupee"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical" />
+         </LinearLayout>
+
+         <!-- Scheme Cards Container (inside scroll) -->
+         <LinearLayout
+             android:id="@+id/schemeContainer"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             android:layout_marginTop="16dp" />
+
+      </LinearLayout>
    </ScrollView>
 </LinearLayout>
