@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tab_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="24dp"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/white">
+    android:background="@drawable/bg_main">
 
     <LinearLayout
         android:id="@+id/tab_gold_to_loan"
@@ -14,15 +15,25 @@
         android:layout_height="200dp"
         android:orientation="vertical"
         android:gravity="center"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/tab_background"
-        android:layout_marginBottom="24dp">
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_gold_bar"
+            android:scaleType="fitCenter" />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gold to Loan"
             android:textSize="18sp"
-            android:textColor="@color/black"/>
+            android:textStyle="bold"
+            android:textColor="#A67C00" /> <!-- Rich gold -->
     </LinearLayout>
 
     <LinearLayout
@@ -31,14 +42,16 @@
         android:layout_height="200dp"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@drawable/tab_background">
+        android:background="@drawable/tab_background"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="More Coming"
             android:textSize="18sp"
-            android:textColor="@color/black"/>
+            android:textColor="#A67C00" />
     </LinearLayout>
 
 </LinearLayout>
