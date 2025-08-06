@@ -83,7 +83,7 @@ A built-in **Manual Page** explains:
 
 ## 📥 Download
 
-👉 [Click Here To Download App](https://github.com/Nikhilk32535/Loan-Calculator/releases/download/v1.0/Loan_Calculator.apk)
+👉 [Click Here To Download App](https://github.com/Nikhilk32535/Loan-Calculator/releases/download/v1.1/Loan_Calculator.apk)
 
 ---
 
