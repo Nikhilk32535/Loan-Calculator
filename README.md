@@ -87,14 +87,6 @@ A built-in **Manual Page** explains:
 
 ---
 
-## 📸 Screenshots
-
-<img src="https://github.com/user-attachments/assets/ec69a8c9-8074-488f-b2e6-1f833be569b5" width="300" />
-<img src="https://github.com/user-attachments/assets/1d7aed63-e0f6-43b0-ac0f-23654569d47c" width="300" />
-<img src="https://github.com/user-attachments/assets/c068efc3-cec1-4b09-b5e1-db00efbb54d6" width="300" />
-
----
-
 ## 📝 License
 Free to use, modify, and distribute.
 
