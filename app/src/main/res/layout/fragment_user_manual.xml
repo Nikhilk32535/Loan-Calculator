@@ -116,5 +116,19 @@
             android:paddingTop="24dp"
             android:paddingBottom="32dp" />
 
+        <TextView
+            android:id="@+id/textViewPurityInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How purity is calculated?"
+            android:textColor="@color/primaryGold"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:clickable="true"
+            android:onClick="textViewPurityInfo"
+            android:focusable="true" />
+
+
     </LinearLayout>
+
 </ScrollView>

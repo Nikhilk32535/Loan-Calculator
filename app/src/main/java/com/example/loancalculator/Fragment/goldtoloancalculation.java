@@ -156,6 +156,9 @@ public class goldtoloancalculation extends Fragment {
                     // Skip if below min
                     if (baseLoan < scheme.getMinLimit()) continue;
 
+                    // ✅ Skip if existing loan is higher than scheme's max limit
+                    if (finalExistingLoan > 0 && finalExistingLoan > scheme.getMaxLimit()) continue;
+
                     // Total loan depends on whether existing loan exists
                     double additionalLoan = Math.max(0, cappedLoan - finalExistingLoan);
                     double totalLoan = finalExistingLoan > 0 ? finalExistingLoan + additionalLoan : cappedLoan;
