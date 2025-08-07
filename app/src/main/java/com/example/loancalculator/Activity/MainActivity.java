@@ -62,11 +62,17 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-        // Start With Default
-        setFrameLayout(new HomeFragment());
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+        MenuItem item = navigationView.getMenu().findItem(R.id.nav_home);
+        if (item != null) {
+            item.setChecked(true);
+            setFrameLayout(new HomeFragment());
+        }
+
+
 
         navigationView.setItemTextColor(new ColorStateList(
                 new int[][]{
@@ -117,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 item.setChecked(true);
-
                 int id = item.getItemId();
 
                 if (id == R.id.nav_home) {
