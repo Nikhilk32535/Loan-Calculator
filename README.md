@@ -30,7 +30,7 @@ The app is built with **Java + Firebase + SQLite**, and features a clean, user-f
 
 ## ⬇️ Download
 
-* **Clic to Download**: Java
+* **Clic to Download**(https://github.com/Nikhilk32535/Loan-Calculator/releases/download/v1.2/Loan-Calculator.apk)
 
 ---
 ## 📦 Project Structure
