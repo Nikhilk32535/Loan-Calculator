@@ -28,9 +28,16 @@ The app is built with **Java + Firebase + SQLite**, and features a clean, user-f
 
 ---
 
-## ⬇️ Download
+## 📥 Download
 
-* **Clic to Download**(https://github.com/Nikhilk32535/Loan-Calculator/releases/download/v1.2/Loan-Calculator.apk)
+You can download the latest APK here:
+
+➡️ [**Download Loan Calculator v1.2**](https://github.com/Nikhilk32535/Loan-Calculator/releases/download/v1.2/Loan-Calculator.apk)
+
+Or use the button below:
+
+[![Download APK](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge\&logo=android)](https://github.com/Nikhilk32535/Loan-Calculator/releases/download/v1.2/Loan-Calculator.apk)
+
 
 ---
 ## 📦 Project Structure
