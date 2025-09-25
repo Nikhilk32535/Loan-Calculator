@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.loancalculator.Fragment.HomeFragment;
+import com.example.loancalculator.Fragment.LoanToGoldFragment;
 import com.example.loancalculator.Fragment.SchemeView;
 import com.example.loancalculator.Fragment.addscheme;
 import com.example.loancalculator.Fragment.goldtoloancalculation;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.gold_yellow));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.border_light));
         }
 
         topAppBar = findViewById(R.id.topAppBar);
@@ -131,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
                     setFrameLayout(new set_purity());
                 } else if (id == R.id.nav_goldtoloan) {
                     setFrameLayout(new goldtoloancalculation());
+                }else if (id == R.id.nav_loantogold) {
+                    setFrameLayout(new LoanToGoldFragment());
                 }else if (id == R.id.nav_scheme) {
                     setFrameLayout(new SchemeView());
                 } else if (id == R.id.set_scheme) {

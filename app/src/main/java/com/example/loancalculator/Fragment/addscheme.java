@@ -208,6 +208,7 @@ public class addscheme extends Fragment {
 
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
         schemeAdapter = new SchemeAdapter();
         recyclerView.setAdapter(schemeAdapter);
 

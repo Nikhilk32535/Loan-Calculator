@@ -129,6 +129,43 @@
             android:focusable="true" />
 
 
+        <!-- 🔽 New Section for Version & Update -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="left"
+            android:paddingTop="24dp"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Version Info:-"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#666" />
+
+            <TextView
+                android:id="@+id/tvAppVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Version"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:textColor="#666" />
+
+            <Button
+                android:id="@+id/btnCheckUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check for Update"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/gold_yellow"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </ScrollView>

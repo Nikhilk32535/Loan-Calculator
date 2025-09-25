@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Loan Input Field -->
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="Enter Loan Amount"
+        app:boxStrokeColor="@color/gold_yellow"
+        app:cursorColor="@color/gold_yellow"
+        app:hintTextColor="@color/gold_yellow"
+        app:boxBackgroundMode="outline">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/loanInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:textColor="@color/textPrimary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Show Calculated Loan -->
+    <TextView
+        android:id="@+id/loanAmountText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loan Amount: ₹0"
+        android:drawableLeft="@drawable/ic_rupee"
+        android:drawablePadding="6dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Button -->
+    <Button
+        android:id="@+id/calculateBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/gold_yellow"
+        android:textColor="@color/text_red"
+        android:text="Calculate Required Gold" />
+
+    <!-- Recycler -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerLoanToGold"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="12dp"/>
+</LinearLayout>

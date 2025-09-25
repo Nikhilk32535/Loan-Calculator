@@ -27,8 +27,10 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         LinearLayout btnGoldToLoan = view.findViewById(R.id.tab_gold_to_loan);
+        LinearLayout btnLoanToGold = view.findViewById(R.id.tab_loan_to_gold); // new tab
         LinearLayout btnComingSoon = view.findViewById(R.id.tab_coming_soon);
 
+        // Gold → Loan
         btnGoldToLoan.setOnClickListener(v -> {
             FragmentTransaction transaction = requireActivity()
                     .getSupportFragmentManager()
@@ -38,6 +40,17 @@ public class HomeFragment extends Fragment {
             transaction.commit();
         });
 
+        // Loan → Gold
+        btnLoanToGold.setOnClickListener(v -> {
+            FragmentTransaction transaction = requireActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.main_container, new LoanToGoldFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+
+        // Coming Soon
         btnComingSoon.setOnClickListener(v ->
                 Toast.makeText(getContext(), "Coming Soon", Toast.LENGTH_SHORT).show()
         );

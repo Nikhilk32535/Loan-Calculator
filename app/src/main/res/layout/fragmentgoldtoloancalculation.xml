@@ -85,7 +85,9 @@
              android:layout_height="wrap_content"
              android:layout_marginTop="16dp"
              android:scrollbars="horizontal"
+             android:background="@drawable/rounded_corner"
              android:scrollbarThumbHorizontal="@color/gold_yellow"
+             android:clipToOutline="true"
              android:fillViewport="true">
 
             <LinearLayout
@@ -94,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
-                android:paddingHorizontal="8dp">
+                android:paddingHorizontal="0dp">
 
                <TextView android:id="@+id/seventypersent" style="@style/PurityButtonStyle" android:text="70" />
                <TextView android:id="@+id/seventyfive" style="@style/PurityButtonStyle" android:text="75" />
@@ -104,6 +106,7 @@
                <TextView android:id="@+id/ninetyone" style="@style/PurityButtonStyle" android:text="91N" />
                <TextView android:id="@+id/ninetynine" style="@style/PurityButtonStyle" android:text="91" />
             </LinearLayout>
+
          </HorizontalScrollView>
 
          <!-- Fixed Bottom Section (Always visible) -->
@@ -120,10 +123,11 @@
                 style="@style/CardBoxStyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Net Weight: 0g"
                 android:drawableLeft="@drawable/ic_weight"
                 android:drawablePadding="6dp"
+                android:background="@drawable/rounded_corner"
                 android:gravity="center_vertical" />
 
             <TextView
@@ -134,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:text="Base LTV: ₹ 0"
                 android:drawableLeft="@drawable/ic_rupee"
+                android:background="@drawable/rounded_corner"
                 android:drawablePadding="6dp"
                 android:gravity="center_vertical" />
          </LinearLayout>
