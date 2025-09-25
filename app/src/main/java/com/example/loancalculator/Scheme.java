@@ -6,49 +6,83 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "schemes")
 public class Scheme {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+  @PrimaryKey(autoGenerate = true)
+  private int id;
 
-    private String name;
-    private String ltvType;
-    private int price;
-    private float minLimit;
-    private float maxLimit;
-    private float interest;
+  private String name;
+  private String ltvType;
+  private int price;
+  private float minLimit;
+  private float maxLimit;
+  private float interest;
 
-    public Scheme() {
-    }
+  public Scheme() {}
 
-    public Scheme(String name, String ltvType, int price, float minLimit, float maxLimit, float interest) {
-        this.name = name;
-        this.ltvType = ltvType;
-        this.price = price;
-        this.minLimit = minLimit;
-        this.maxLimit = maxLimit;
-        this.interest = interest;
-    }
+  public Scheme(
+      String name, String ltvType, int price, float minLimit, float maxLimit, float interest) {
+    this.name = name;
+    this.ltvType = ltvType;
+    this.price = price;
+    this.minLimit = minLimit;
+    this.maxLimit = maxLimit;
+    this.interest = interest;
+  }
 
-    // Getters and setters
+  // Getters and setters
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+  public int getId() {
+    return id;
+  }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public String getLtvType() { return ltvType; }
-    public void setLtvType(String ltvType) { this.ltvType = ltvType; }
+  public String getName() {
+    return name;
+  }
 
-    public int getPrice() { return price; }
-    public void setPrice(int price) { this.price = price; }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public float getMinLimit() { return minLimit; }
-    public void setMinLimit(float minLimit) { this.minLimit = minLimit; }
+  public String getLtvType() {
+    return ltvType;
+  }
 
-    public float getMaxLimit() { return maxLimit; }
-    public void setMaxLimit(float maxLimit) { this.maxLimit = maxLimit; }
+  public void setLtvType(String ltvType) {
+    this.ltvType = ltvType;
+  }
 
-    public float getInterest() { return interest; }
-    public void setInterest(float interest) { this.interest = interest; }
+  public int getPrice() {
+    return price;
+  }
 
+  public void setPrice(int price) {
+    this.price = price;
+  }
+
+  public float getMinLimit() {
+    return minLimit;
+  }
+
+  public void setMinLimit(float minLimit) {
+    this.minLimit = minLimit;
+  }
+
+  public float getMaxLimit() {
+    return maxLimit;
+  }
+
+  public void setMaxLimit(float maxLimit) {
+    this.maxLimit = maxLimit;
+  }
+
+  public float getInterest() {
+    return interest;
+  }
+
+  public void setInterest(float interest) {
+    this.interest = interest;
+  }
 }
