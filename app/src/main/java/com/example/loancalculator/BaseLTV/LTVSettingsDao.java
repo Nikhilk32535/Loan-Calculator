@@ -8,10 +8,9 @@ import androidx.room.Query;
 @Dao
 public interface LTVSettingsDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertOrUpdate(LTVSettings settings);
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  void insertOrUpdate(LTVSettings settings);
 
-    @Query("SELECT * FROM ltv_settings LIMIT 1")
-    LTVSettings getBase75LTV();
-
+  @Query("SELECT * FROM ltv_settings LIMIT 1")
+  LTVSettings getBase75LTV();
 }
